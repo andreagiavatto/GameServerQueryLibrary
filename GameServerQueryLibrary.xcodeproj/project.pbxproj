@@ -1,0 +1,694 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 52;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		"GameServerQueryLibrary::GameServerQueryLibraryPackageTests::ProductTarget" /* GameServerQueryLibraryPackageTests */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = OBJ_32 /* Build configuration list for PBXAggregateTarget "GameServerQueryLibraryPackageTests" */;
+			buildPhases = (
+			);
+			dependencies = (
+				OBJ_35 /* PBXTargetDependency */,
+			);
+			name = GameServerQueryLibraryPackageTests;
+			productName = GameServerQueryLibraryPackageTests;
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXBuildFile section */
+		22F7B2E325587E0400DF845D /* SQLError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2C625587E0400DF845D /* SQLError.swift */; };
+		22F7B2E425587E0400DF845D /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2C725587E0400DF845D /* Server.swift */; };
+		22F7B2E525587E0400DF845D /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2C825587E0400DF845D /* Game.swift */; };
+		22F7B2E625587E0400DF845D /* Parsable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2C925587E0400DF845D /* Parsable.swift */; };
+		22F7B2E725587E0400DF845D /* ServerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2CB25587E0400DF845D /* ServerController.swift */; };
+		22F7B2E825587E0400DF845D /* Q3Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2CF25587E0400DF845D /* Q3Coordinator.swift */; };
+		22F7B2E925587E0400DF845D /* Q3Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2D025587E0400DF845D /* Q3Server.swift */; };
+		22F7B2EA25587E0400DF845D /* Q3ServerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2D125587E0400DF845D /* Q3ServerController.swift */; };
+		22F7B2EB25587E0400DF845D /* Q3Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2D225587E0400DF845D /* Q3Player.swift */; };
+		22F7B2EC25587E0400DF845D /* Q3Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2D325587E0400DF845D /* Q3Parser.swift */; };
+		22F7B2ED25587E0400DF845D /* Q3Operation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2D425587E0400DF845D /* Q3Operation.swift */; };
+		22F7B2EE25587E0400DF845D /* Q3MasterServerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2D525587E0400DF845D /* Q3MasterServerController.swift */; };
+		22F7B2EF25587E0500DF845D /* RTCWCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2D825587E0400DF845D /* RTCWCoordinator.swift */; };
+		22F7B2F025587E0500DF845D /* RTCWMasterServerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2D925587E0400DF845D /* RTCWMasterServerController.swift */; };
+		22F7B2F125587E0500DF845D /* QueryOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2DA25587E0400DF845D /* QueryOperation.swift */; };
+		22F7B2F225587E0500DF845D /* String+Q3Name.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2DC25587E0400DF845D /* String+Q3Name.swift */; };
+		22F7B2F325587E0500DF845D /* GCDAsyncUDPSocketWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2DD25587E0400DF845D /* GCDAsyncUDPSocketWrapper.swift */; };
+		22F7B2F425587E0500DF845D /* MasterServerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2DE25587E0400DF845D /* MasterServerController.swift */; };
+		22F7B2F525587E0500DF845D /* SupportedGames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2DF25587E0400DF845D /* SupportedGames.swift */; };
+		22F7B2F625587E0500DF845D /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2E025587E0400DF845D /* Coordinator.swift */; };
+		22F7B2F725587E0500DF845D /* Server+Teams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2E125587E0400DF845D /* Server+Teams.swift */; };
+		22F7B2F825587E0500DF845D /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2E225587E0400DF845D /* Player.swift */; };
+		22F7B2FB25587F5300DF845D /* CocoaAsyncSocket in Frameworks */ = {isa = PBXBuildFile; productRef = 22F7B2FA25587F5300DF845D /* CocoaAsyncSocket */; };
+		22F7B3002558802500DF845D /* Q3MasterServerControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2FD2558802500DF845D /* Q3MasterServerControllerTests.swift */; };
+		22F7B3012558802500DF845D /* GCDAsyncUDPSocketWrapperMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2FF2558802500DF845D /* GCDAsyncUDPSocketWrapperMock.swift */; };
+		OBJ_30 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
+		OBJ_44 /* GameServerQueryLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "GameServerQueryLibrary::GameServerQueryLibrary::Product" /* GameServerQueryLibrary.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		22F7B2C425587DE800DF845D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "GameServerQueryLibrary::GameServerQueryLibrary";
+			remoteInfo = GameServerQueryLibrary;
+		};
+		22F7B2C525587DE900DF845D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "GameServerQueryLibrary::GameServerQueryLibraryTests";
+			remoteInfo = GameServerQueryLibraryTests;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		22F7B2C625587E0400DF845D /* SQLError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLError.swift; sourceTree = "<group>"; };
+		22F7B2C725587E0400DF845D /* Server.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Server.swift; sourceTree = "<group>"; };
+		22F7B2C825587E0400DF845D /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
+		22F7B2C925587E0400DF845D /* Parsable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parsable.swift; sourceTree = "<group>"; };
+		22F7B2CB25587E0400DF845D /* ServerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerController.swift; sourceTree = "<group>"; };
+		22F7B2CF25587E0400DF845D /* Q3Coordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Q3Coordinator.swift; sourceTree = "<group>"; };
+		22F7B2D025587E0400DF845D /* Q3Server.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Q3Server.swift; sourceTree = "<group>"; };
+		22F7B2D125587E0400DF845D /* Q3ServerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Q3ServerController.swift; sourceTree = "<group>"; };
+		22F7B2D225587E0400DF845D /* Q3Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Q3Player.swift; sourceTree = "<group>"; };
+		22F7B2D325587E0400DF845D /* Q3Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Q3Parser.swift; sourceTree = "<group>"; };
+		22F7B2D425587E0400DF845D /* Q3Operation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Q3Operation.swift; sourceTree = "<group>"; };
+		22F7B2D525587E0400DF845D /* Q3MasterServerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Q3MasterServerController.swift; sourceTree = "<group>"; };
+		22F7B2D825587E0400DF845D /* RTCWCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTCWCoordinator.swift; sourceTree = "<group>"; };
+		22F7B2D925587E0400DF845D /* RTCWMasterServerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTCWMasterServerController.swift; sourceTree = "<group>"; };
+		22F7B2DA25587E0400DF845D /* QueryOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryOperation.swift; sourceTree = "<group>"; };
+		22F7B2DC25587E0400DF845D /* String+Q3Name.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Q3Name.swift"; sourceTree = "<group>"; };
+		22F7B2DD25587E0400DF845D /* GCDAsyncUDPSocketWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDAsyncUDPSocketWrapper.swift; sourceTree = "<group>"; };
+		22F7B2DE25587E0400DF845D /* MasterServerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterServerController.swift; sourceTree = "<group>"; };
+		22F7B2DF25587E0400DF845D /* SupportedGames.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupportedGames.swift; sourceTree = "<group>"; };
+		22F7B2E025587E0400DF845D /* Coordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		22F7B2E125587E0400DF845D /* Server+Teams.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Server+Teams.swift"; sourceTree = "<group>"; };
+		22F7B2E225587E0400DF845D /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		22F7B2FD2558802500DF845D /* Q3MasterServerControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Q3MasterServerControllerTests.swift; sourceTree = "<group>"; };
+		22F7B2FF2558802500DF845D /* GCDAsyncUDPSocketWrapperMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDAsyncUDPSocketWrapperMock.swift; sourceTree = "<group>"; };
+		"GameServerQueryLibrary::GameServerQueryLibrary::Product" /* GameServerQueryLibrary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = GameServerQueryLibrary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		"GameServerQueryLibrary::GameServerQueryLibraryTests::Product" /* GameServerQueryLibraryTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = GameServerQueryLibraryTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		OBJ_17 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		OBJ_6 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		OBJ_24 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 0;
+			files = (
+				22F7B2FB25587F5300DF845D /* CocoaAsyncSocket in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_43 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 0;
+			files = (
+				OBJ_44 /* GameServerQueryLibrary.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		22F7B2CA25587E0400DF845D /* Internals */ = {
+			isa = PBXGroup;
+			children = (
+				22F7B2CB25587E0400DF845D /* ServerController.swift */,
+				22F7B2CC25587E0400DF845D /* GameProtocols */,
+				22F7B2DA25587E0400DF845D /* QueryOperation.swift */,
+				22F7B2DB25587E0400DF845D /* Utilities */,
+				22F7B2DD25587E0400DF845D /* GCDAsyncUDPSocketWrapper.swift */,
+				22F7B2DE25587E0400DF845D /* MasterServerController.swift */,
+			);
+			path = Internals;
+			sourceTree = "<group>";
+		};
+		22F7B2CC25587E0400DF845D /* GameProtocols */ = {
+			isa = PBXGroup;
+			children = (
+				22F7B2CD25587E0400DF845D /* Quake3 */,
+				22F7B2D625587E0400DF845D /* RTCW */,
+			);
+			path = GameProtocols;
+			sourceTree = "<group>";
+		};
+		22F7B2CD25587E0400DF845D /* Quake3 */ = {
+			isa = PBXGroup;
+			children = (
+				22F7B2CE25587E0400DF845D /* Coordinator */,
+				22F7B2D025587E0400DF845D /* Q3Server.swift */,
+				22F7B2D125587E0400DF845D /* Q3ServerController.swift */,
+				22F7B2D225587E0400DF845D /* Q3Player.swift */,
+				22F7B2D325587E0400DF845D /* Q3Parser.swift */,
+				22F7B2D425587E0400DF845D /* Q3Operation.swift */,
+				22F7B2D525587E0400DF845D /* Q3MasterServerController.swift */,
+			);
+			path = Quake3;
+			sourceTree = "<group>";
+		};
+		22F7B2CE25587E0400DF845D /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				22F7B2CF25587E0400DF845D /* Q3Coordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		22F7B2D625587E0400DF845D /* RTCW */ = {
+			isa = PBXGroup;
+			children = (
+				22F7B2D725587E0400DF845D /* Coordinator */,
+				22F7B2D925587E0400DF845D /* RTCWMasterServerController.swift */,
+			);
+			path = RTCW;
+			sourceTree = "<group>";
+		};
+		22F7B2D725587E0400DF845D /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				22F7B2D825587E0400DF845D /* RTCWCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		22F7B2DB25587E0400DF845D /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				22F7B2DC25587E0400DF845D /* String+Q3Name.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		22F7B2FC2558802500DF845D /* Q3 */ = {
+			isa = PBXGroup;
+			children = (
+				22F7B2FD2558802500DF845D /* Q3MasterServerControllerTests.swift */,
+			);
+			path = Q3;
+			sourceTree = "<group>";
+		};
+		22F7B2FE2558802500DF845D /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				22F7B2FF2558802500DF845D /* GCDAsyncUDPSocketWrapperMock.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
+		OBJ_10 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_11 /* GameServerQueryLibraryTests */,
+			);
+			name = Tests;
+			sourceTree = SOURCE_ROOT;
+		};
+		OBJ_11 /* GameServerQueryLibraryTests */ = {
+			isa = PBXGroup;
+			children = (
+				22F7B2FE2558802500DF845D /* Mocks */,
+				22F7B2FC2558802500DF845D /* Q3 */,
+			);
+			name = GameServerQueryLibraryTests;
+			path = Tests/GameServerQueryLibraryTests;
+			sourceTree = SOURCE_ROOT;
+		};
+		OBJ_14 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				"GameServerQueryLibrary::GameServerQueryLibraryTests::Product" /* GameServerQueryLibraryTests.xctest */,
+				"GameServerQueryLibrary::GameServerQueryLibrary::Product" /* GameServerQueryLibrary.framework */,
+			);
+			name = Products;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		OBJ_5 /*  */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_6 /* Package.swift */,
+				OBJ_7 /* Sources */,
+				OBJ_10 /* Tests */,
+				OBJ_14 /* Products */,
+				OBJ_17 /* README.md */,
+			);
+			name = "";
+			sourceTree = "<group>";
+		};
+		OBJ_7 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_8 /* GameServerQueryLibrary */,
+			);
+			name = Sources;
+			sourceTree = SOURCE_ROOT;
+		};
+		OBJ_8 /* GameServerQueryLibrary */ = {
+			isa = PBXGroup;
+			children = (
+				22F7B2E025587E0400DF845D /* Coordinator.swift */,
+				22F7B2C825587E0400DF845D /* Game.swift */,
+				22F7B2CA25587E0400DF845D /* Internals */,
+				22F7B2C925587E0400DF845D /* Parsable.swift */,
+				22F7B2E225587E0400DF845D /* Player.swift */,
+				22F7B2C725587E0400DF845D /* Server.swift */,
+				22F7B2E125587E0400DF845D /* Server+Teams.swift */,
+				22F7B2C625587E0400DF845D /* SQLError.swift */,
+				22F7B2DF25587E0400DF845D /* SupportedGames.swift */,
+			);
+			name = GameServerQueryLibrary;
+			path = Sources/GameServerQueryLibrary;
+			sourceTree = SOURCE_ROOT;
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		"GameServerQueryLibrary::GameServerQueryLibrary" /* GameServerQueryLibrary */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = OBJ_19 /* Build configuration list for PBXNativeTarget "GameServerQueryLibrary" */;
+			buildPhases = (
+				OBJ_22 /* Sources */,
+				OBJ_24 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GameServerQueryLibrary;
+			packageProductDependencies = (
+				22F7B2FA25587F5300DF845D /* CocoaAsyncSocket */,
+			);
+			productName = GameServerQueryLibrary;
+			productReference = "GameServerQueryLibrary::GameServerQueryLibrary::Product" /* GameServerQueryLibrary.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		"GameServerQueryLibrary::GameServerQueryLibraryTests" /* GameServerQueryLibraryTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = OBJ_37 /* Build configuration list for PBXNativeTarget "GameServerQueryLibraryTests" */;
+			buildPhases = (
+				OBJ_40 /* Sources */,
+				OBJ_43 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				OBJ_45 /* PBXTargetDependency */,
+			);
+			name = GameServerQueryLibraryTests;
+			productName = GameServerQueryLibraryTests;
+			productReference = "GameServerQueryLibrary::GameServerQueryLibraryTests::Product" /* GameServerQueryLibraryTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		"GameServerQueryLibrary::SwiftPMPackageDescription" /* GameServerQueryLibraryPackageDescription */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = OBJ_26 /* Build configuration list for PBXNativeTarget "GameServerQueryLibraryPackageDescription" */;
+			buildPhases = (
+				OBJ_29 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GameServerQueryLibraryPackageDescription;
+			productName = GameServerQueryLibraryPackageDescription;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		OBJ_1 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftMigration = 9999;
+				LastUpgradeCheck = 9999;
+			};
+			buildConfigurationList = OBJ_2 /* Build configuration list for PBXProject "GameServerQueryLibrary" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = OBJ_5 /*  */;
+			packageReferences = (
+				22F7B2F925587F5300DF845D /* XCRemoteSwiftPackageReference "CocoaAsyncSocket" */,
+			);
+			productRefGroup = OBJ_14 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				"GameServerQueryLibrary::GameServerQueryLibrary" /* GameServerQueryLibrary */,
+				"GameServerQueryLibrary::SwiftPMPackageDescription" /* GameServerQueryLibraryPackageDescription */,
+				"GameServerQueryLibrary::GameServerQueryLibraryPackageTests::ProductTarget" /* GameServerQueryLibraryPackageTests */,
+				"GameServerQueryLibrary::GameServerQueryLibraryTests" /* GameServerQueryLibraryTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		OBJ_22 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 0;
+			files = (
+				22F7B2EF25587E0500DF845D /* RTCWCoordinator.swift in Sources */,
+				22F7B2F725587E0500DF845D /* Server+Teams.swift in Sources */,
+				22F7B2E825587E0400DF845D /* Q3Coordinator.swift in Sources */,
+				22F7B2EE25587E0400DF845D /* Q3MasterServerController.swift in Sources */,
+				22F7B2F825587E0500DF845D /* Player.swift in Sources */,
+				22F7B2E625587E0400DF845D /* Parsable.swift in Sources */,
+				22F7B2F425587E0500DF845D /* MasterServerController.swift in Sources */,
+				22F7B2E725587E0400DF845D /* ServerController.swift in Sources */,
+				22F7B2F225587E0500DF845D /* String+Q3Name.swift in Sources */,
+				22F7B2F125587E0500DF845D /* QueryOperation.swift in Sources */,
+				22F7B2EB25587E0400DF845D /* Q3Player.swift in Sources */,
+				22F7B2F525587E0500DF845D /* SupportedGames.swift in Sources */,
+				22F7B2EA25587E0400DF845D /* Q3ServerController.swift in Sources */,
+				22F7B2E925587E0400DF845D /* Q3Server.swift in Sources */,
+				22F7B2F025587E0500DF845D /* RTCWMasterServerController.swift in Sources */,
+				22F7B2F325587E0500DF845D /* GCDAsyncUDPSocketWrapper.swift in Sources */,
+				22F7B2EC25587E0400DF845D /* Q3Parser.swift in Sources */,
+				22F7B2E425587E0400DF845D /* Server.swift in Sources */,
+				22F7B2ED25587E0400DF845D /* Q3Operation.swift in Sources */,
+				22F7B2E325587E0400DF845D /* SQLError.swift in Sources */,
+				22F7B2E525587E0400DF845D /* Game.swift in Sources */,
+				22F7B2F625587E0500DF845D /* Coordinator.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_29 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 0;
+			files = (
+				OBJ_30 /* Package.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_40 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 0;
+			files = (
+				22F7B3012558802500DF845D /* GCDAsyncUDPSocketWrapperMock.swift in Sources */,
+				22F7B3002558802500DF845D /* Q3MasterServerControllerTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		OBJ_35 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "GameServerQueryLibrary::GameServerQueryLibraryTests" /* GameServerQueryLibraryTests */;
+			targetProxy = 22F7B2C525587DE900DF845D /* PBXContainerItemProxy */;
+		};
+		OBJ_45 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "GameServerQueryLibrary::GameServerQueryLibrary" /* GameServerQueryLibrary */;
+			targetProxy = 22F7B2C425587DE800DF845D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		OBJ_20 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = GameServerQueryLibrary.xcodeproj/GameServerQueryLibrary_Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(TOOLCHAIN_DIR)/usr/lib/swift/macosx",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				OTHER_CFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = GameServerQueryLibrary;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator watchos watchsimulator";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
+				SWIFT_VERSION = 5.0;
+				TARGET_NAME = GameServerQueryLibrary;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+				WATCHOS_DEPLOYMENT_TARGET = 4.0;
+			};
+			name = Debug;
+		};
+		OBJ_21 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = GameServerQueryLibrary.xcodeproj/GameServerQueryLibrary_Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(TOOLCHAIN_DIR)/usr/lib/swift/macosx",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				OTHER_CFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = GameServerQueryLibrary;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator watchos watchsimulator";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
+				SWIFT_VERSION = 5.0;
+				TARGET_NAME = GameServerQueryLibrary;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+				WATCHOS_DEPLOYMENT_TARGET = 4.0;
+			};
+			name = Release;
+		};
+		OBJ_27 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				LD = /usr/bin/true;
+				OTHER_SWIFT_FLAGS = "-swift-version 5 -I $(TOOLCHAIN_DIR)/usr/lib/swift/pm/4_2 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk -package-description-version 5.1";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		OBJ_28 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				LD = /usr/bin/true;
+				OTHER_SWIFT_FLAGS = "-swift-version 5 -I $(TOOLCHAIN_DIR)/usr/lib/swift/pm/4_2 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk -package-description-version 5.1";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		OBJ_3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_NS_ASSERTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"SWIFT_PACKAGE=1",
+					"DEBUG=1",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_SWIFT_FLAGS = "$(inherited) -DXcode";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator appletvos appletvsimulator watchos watchsimulator";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) SWIFT_PACKAGE DEBUG";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				USE_HEADERMAP = NO;
+			};
+			name = Debug;
+		};
+		OBJ_33 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		OBJ_34 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Release;
+		};
+		OBJ_38 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = GameServerQueryLibrary.xcodeproj/GameServerQueryLibraryTests_Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@loader_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				OTHER_CFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator watchos watchsimulator";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
+				SWIFT_VERSION = 5.0;
+				TARGET_NAME = GameServerQueryLibraryTests;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+				WATCHOS_DEPLOYMENT_TARGET = 4.0;
+			};
+			name = Debug;
+		};
+		OBJ_39 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = GameServerQueryLibrary.xcodeproj/GameServerQueryLibraryTests_Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@loader_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				OTHER_CFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator watchos watchsimulator";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
+				SWIFT_VERSION = 5.0;
+				TARGET_NAME = GameServerQueryLibraryTests;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+				WATCHOS_DEPLOYMENT_TARGET = 4.0;
+			};
+			name = Release;
+		};
+		OBJ_4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"SWIFT_PACKAGE=1",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				OTHER_SWIFT_FLAGS = "$(inherited) -DXcode";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator appletvos appletvsimulator watchos watchsimulator";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) SWIFT_PACKAGE";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				USE_HEADERMAP = NO;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		OBJ_19 /* Build configuration list for PBXNativeTarget "GameServerQueryLibrary" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_20 /* Debug */,
+				OBJ_21 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		OBJ_2 /* Build configuration list for PBXProject "GameServerQueryLibrary" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_3 /* Debug */,
+				OBJ_4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		OBJ_26 /* Build configuration list for PBXNativeTarget "GameServerQueryLibraryPackageDescription" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_27 /* Debug */,
+				OBJ_28 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		OBJ_32 /* Build configuration list for PBXAggregateTarget "GameServerQueryLibraryPackageTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_33 /* Debug */,
+				OBJ_34 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		OBJ_37 /* Build configuration list for PBXNativeTarget "GameServerQueryLibraryTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_38 /* Debug */,
+				OBJ_39 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		22F7B2F925587F5300DF845D /* XCRemoteSwiftPackageReference "CocoaAsyncSocket" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/robbiehanson/CocoaAsyncSocket";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.6.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		22F7B2FA25587F5300DF845D /* CocoaAsyncSocket */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 22F7B2F925587F5300DF845D /* XCRemoteSwiftPackageReference "CocoaAsyncSocket" */;
+			productName = CocoaAsyncSocket;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = OBJ_1 /* Project object */;
+}
