@@ -10,6 +10,7 @@ import Foundation
 class Q3Server: NSObject, Server {
     
     @objc var ping: String = ""
+    @objc var pingInt: Int = 0
     @objc let ip: String
     let port: String
     var originalName: String = ""
@@ -36,6 +37,7 @@ class Q3Server: NSObject, Server {
     
     required init?(coder aDecoder: NSCoder) {
         self.ping = aDecoder.decodeObject(forKey: "ping") as? String ?? ""
+        self.pingInt = aDecoder.decodeObject(forKey: "pingInt") as? Int ?? 0
         self.ip = aDecoder.decodeObject(forKey: "ip") as? String ?? ""
         self.port = aDecoder.decodeObject(forKey: "port") as? String ?? ""
         self.originalName = aDecoder.decodeObject(forKey: "originalName") as? String ?? ""
@@ -52,6 +54,7 @@ class Q3Server: NSObject, Server {
     
     func encode(with aCoder: NSCoder) {
         aCoder.encode(ping, forKey: "ping")
+        aCoder.encode(pingInt, forKey: "pingInt")
         aCoder.encode(ip, forKey: "ip")
         aCoder.encode(port, forKey: "port")
         aCoder.encode(originalName, forKey: "originalName")
@@ -83,6 +86,7 @@ class Q3Server: NSObject, Server {
 
         self.name = ""
         self.ping = ping
+        self.pingInt = Int(ping) ?? 0
         self.originalName = originalName
         self.map = map
         self.maxPlayers = maxPlayers
@@ -115,6 +119,7 @@ class Q3Server: NSObject, Server {
             return
         }
         self.ping = ping
+        self.pingInt = Int(ping) ?? 0
         self.currentPlayers = currentPlayers
     }
 }

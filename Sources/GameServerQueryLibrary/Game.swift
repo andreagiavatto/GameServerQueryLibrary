@@ -12,11 +12,17 @@ public class Game: NSObject {
     
     public let type: SupportedGames
     public let launchArguments: String
+    
     public var name: String {
         return type.name
     }
+    
     public var masterServers: [MasterServer] {
         return type.masterServers
+    }
+    
+    public var defaultMasterServer: MasterServer {
+        return type.defaultMasterServer
     }
 
     public init(type: SupportedGames) {

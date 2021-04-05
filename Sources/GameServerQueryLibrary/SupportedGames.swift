@@ -59,6 +59,17 @@ public enum SupportedGames: CaseIterable {
             return RTCWCoordinator()
         }
     }
+    
+    public var defaultMasterServer: MasterServer {
+        switch self {
+        case .quake3:
+            return MasterServer(hostname: "dpmaster.deathmask.net", port:"27950")
+        case .urbanTerror:
+            return MasterServer(hostname: "master.urbanterror.info", port: "27900")
+        case .rtcw:
+            return MasterServer(hostname: "master.iortcw.org", port: "27950")
+        }
+    }
 
     public var launchArguments: String {
         return "+connect"

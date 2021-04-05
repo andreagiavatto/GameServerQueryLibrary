@@ -11,6 +11,7 @@ import Foundation
 @objc public protocol Server: NSCoding {
     
     var ping: String { get }
+    var pingInt: Int { get }
     var ip: String { get }
     var port: String { get }
     var originalName: String { get }
