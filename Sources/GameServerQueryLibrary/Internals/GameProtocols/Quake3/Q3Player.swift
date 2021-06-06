@@ -33,7 +33,7 @@ class Q3Player: NSObject, Player {
         } else {
             name = restOfName.first ?? ""
         }
-        self.name = name.stripQ3Colors().replacingOccurrences(of: "\"", with: "")
+        self.name = name.q3ColorDecoded.replacingOccurrences(of: "\"", with: "")
     }
     
     required init?(coder aDecoder: NSCoder) {

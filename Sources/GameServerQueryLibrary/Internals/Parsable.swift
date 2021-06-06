@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol Parsable {
+protocol Parsable {
     
     static func parseServers(_ data: Data) -> [String]
     static func parseServer(_ data: Data) -> [String: String]?

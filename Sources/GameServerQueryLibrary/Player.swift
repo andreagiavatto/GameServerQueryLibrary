@@ -8,7 +8,7 @@
 
 import Foundation
 
-@objc public protocol Player: NSCoding {
+public protocol Player: NSCoding {
     
     var name: String { get }
     var ping: String { get }

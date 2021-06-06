@@ -22,18 +22,18 @@ public enum SupportedGames: CaseIterable {
     case urbanTerror
     case rtcw
     
-    public var name: String {
+    var name: String {
         switch self {
         case .quake3:
             return "Quake 3 Arena"
         case .urbanTerror:
-            return "UrbanTerror"
+            return "Urban Terror"
         case .rtcw:
             return "Return to Castle Wolfenstein"
         }
     }
     
-    public var masterServers: [MasterServer] {
+    var masterServers: [MasterServer] {
         switch self {
         case .quake3:
             return [MasterServer(hostname: "master.ioquake3.org", port:"27950"),
@@ -49,7 +49,7 @@ public enum SupportedGames: CaseIterable {
         }
     }
     
-    public var coordinator: Coordinator {
+    var coordinator: Coordinator {
         switch self {
         case .quake3:
             return Q3Coordinator()
@@ -60,7 +60,7 @@ public enum SupportedGames: CaseIterable {
         }
     }
     
-    public var defaultMasterServer: MasterServer {
+    var defaultMasterServer: MasterServer {
         switch self {
         case .quake3:
             return MasterServer(hostname: "dpmaster.deathmask.net", port:"27950")

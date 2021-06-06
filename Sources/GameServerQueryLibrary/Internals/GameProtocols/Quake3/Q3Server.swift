@@ -110,7 +110,7 @@ class Q3Server: NSObject, Server {
             self.gametype = "unknown"
         }
         
-        self.name = self.originalName.stripQ3Colors()
+        self.name = self.originalName.q3ColorDecoded
     }
     
     func update(currentPlayers: String, ping: String) {

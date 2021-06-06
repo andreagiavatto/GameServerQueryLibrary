@@ -10,9 +10,9 @@ import Foundation
 
 public extension String {
     
-    func stripQ3Colors() -> String {
+    var q3ColorDecoded: String {
         guard self.count > 0 else {
-            return ""
+            return self
         }
         
         var decodedString = ""

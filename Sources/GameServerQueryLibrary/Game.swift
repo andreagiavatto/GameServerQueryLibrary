@@ -8,29 +8,18 @@
 
 import Foundation
 
-public class Game: NSObject {
-    
+public struct Game: Identifiable {
     public let type: SupportedGames
     public let launchArguments: String
     
-    public var name: String {
-        return type.name
-    }
-    
-    public var masterServers: [MasterServer] {
-        return type.masterServers
-    }
-    
-    public var defaultMasterServer: MasterServer {
-        return type.defaultMasterServer
-    }
+    public var id: String { name }
+    public var name: String { type.name }
+    public var coordinator: Coordinator { type.coordinator }
+    public var masterServers: [MasterServer] { type.masterServers }
+    public var defaultMasterServer: MasterServer { type.defaultMasterServer }
 
     public init(type: SupportedGames) {
         self.type = type
         self.launchArguments = type.launchArguments
-    }
-    
-    override public var description: String {
-        return "<Game: \(self)> Name: \(type.name)"
     }
 }

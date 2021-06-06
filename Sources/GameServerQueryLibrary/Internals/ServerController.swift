@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol ServerControllerDelegate: class {
+protocol ServerControllerDelegate: AnyObject {
     
     func serverController(_ controller: ServerController, didFinishWithError error: Error?)
     func serverController(_ controller: ServerController, didFinishFetchingServerInfoWith operation: QueryOperation)

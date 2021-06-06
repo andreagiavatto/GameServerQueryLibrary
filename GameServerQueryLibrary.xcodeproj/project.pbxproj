@@ -21,7 +21,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		22F7B2E325587E0400DF845D /* SQLError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2C625587E0400DF845D /* SQLError.swift */; };
+		22F7B2E325587E0400DF845D /* GSQLError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2C625587E0400DF845D /* GSQLError.swift */; };
 		22F7B2E425587E0400DF845D /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2C725587E0400DF845D /* Server.swift */; };
 		22F7B2E525587E0400DF845D /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2C825587E0400DF845D /* Game.swift */; };
 		22F7B2E625587E0400DF845D /* Parsable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2C925587E0400DF845D /* Parsable.swift */; };
@@ -68,7 +68,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		22F7B2C625587E0400DF845D /* SQLError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLError.swift; sourceTree = "<group>"; };
+		22F7B2C625587E0400DF845D /* GSQLError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSQLError.swift; sourceTree = "<group>"; };
 		22F7B2C725587E0400DF845D /* Server.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Server.swift; sourceTree = "<group>"; };
 		22F7B2C825587E0400DF845D /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		22F7B2C925587E0400DF845D /* Parsable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parsable.swift; sourceTree = "<group>"; };
@@ -121,6 +121,7 @@
 		22F7B2CA25587E0400DF845D /* Internals */ = {
 			isa = PBXGroup;
 			children = (
+				22F7B2C925587E0400DF845D /* Parsable.swift */,
 				22F7B2CB25587E0400DF845D /* ServerController.swift */,
 				22F7B2CC25587E0400DF845D /* GameProtocols */,
 				22F7B2DA25587E0400DF845D /* QueryOperation.swift */,
@@ -230,7 +231,7 @@
 			name = Products;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		OBJ_5 /*  */ = {
+		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
 				OBJ_6 /* Package.swift */,
@@ -239,7 +240,6 @@
 				OBJ_14 /* Products */,
 				OBJ_17 /* README.md */,
 			);
-			name = "";
 			sourceTree = "<group>";
 		};
 		OBJ_7 /* Sources */ = {
@@ -256,11 +256,10 @@
 				22F7B2E025587E0400DF845D /* Coordinator.swift */,
 				22F7B2C825587E0400DF845D /* Game.swift */,
 				22F7B2CA25587E0400DF845D /* Internals */,
-				22F7B2C925587E0400DF845D /* Parsable.swift */,
 				22F7B2E225587E0400DF845D /* Player.swift */,
 				22F7B2C725587E0400DF845D /* Server.swift */,
 				22F7B2E125587E0400DF845D /* Server+Teams.swift */,
-				22F7B2C625587E0400DF845D /* SQLError.swift */,
+				22F7B2C625587E0400DF845D /* GSQLError.swift */,
 				22F7B2DF25587E0400DF845D /* SupportedGames.swift */,
 			);
 			name = GameServerQueryLibrary;
@@ -336,7 +335,7 @@
 			knownRegions = (
 				en,
 			);
-			mainGroup = OBJ_5 /*  */;
+			mainGroup = OBJ_5;
 			packageReferences = (
 				22F7B2F925587F5300DF845D /* XCRemoteSwiftPackageReference "CocoaAsyncSocket" */,
 			);
@@ -376,7 +375,7 @@
 				22F7B2EC25587E0400DF845D /* Q3Parser.swift in Sources */,
 				22F7B2E425587E0400DF845D /* Server.swift in Sources */,
 				22F7B2ED25587E0400DF845D /* Q3Operation.swift in Sources */,
-				22F7B2E325587E0400DF845D /* SQLError.swift in Sources */,
+				22F7B2E325587E0400DF845D /* GSQLError.swift in Sources */,
 				22F7B2E525587E0400DF845D /* Game.swift in Sources */,
 				22F7B2F625587E0500DF845D /* Coordinator.swift in Sources */,
 			);
@@ -430,7 +429,8 @@
 					"$(inherited)",
 					"$(TOOLCHAIN_DIR)/usr/lib/swift/macosx",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MARKETING_VERSION = 1.0.1;
 				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
@@ -462,7 +462,8 @@
 					"$(inherited)",
 					"$(TOOLCHAIN_DIR)/usr/lib/swift/macosx",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MARKETING_VERSION = 1.0.1;
 				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
@@ -512,7 +513,7 @@
 					"SWIFT_PACKAGE=1",
 					"DEBUG=1",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_SWIFT_FLAGS = "$(inherited) -DXcode";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -553,7 +554,7 @@
 					"@loader_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
@@ -583,7 +584,7 @@
 					"@loader_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
@@ -609,7 +610,7 @@
 					"$(inherited)",
 					"SWIFT_PACKAGE=1",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				OTHER_SWIFT_FLAGS = "$(inherited) -DXcode";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;

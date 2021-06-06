@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol MasterServerControllerDelegate: class {
+protocol MasterServerControllerDelegate: AnyObject {
     
     func didStartFetchingServers(forMasterController controller: MasterServerController)
     func masterController(_ controller: MasterServerController, didFinishWithError error: Error?)

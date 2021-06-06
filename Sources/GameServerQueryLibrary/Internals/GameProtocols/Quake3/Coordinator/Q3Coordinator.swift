@@ -16,8 +16,8 @@ class Q3Coordinator: NSObject, Coordinator {
     fileprivate let serverController = Q3ServerController()
     private(set) var serversList = [Server]()
     private var toRequestInfo = [Server]()
-    private let masterServerController = Q3MasterServerController(queue: DispatchQueue(label: "com.sql.q3-master-server.queue"), socket: GCDAsyncUdpSocket())
-    private let serverOperationsQueue = DispatchQueue(label: "com.q3browser.q3-server-operations.queue")
+    private let masterServerController = Q3MasterServerController(queue: DispatchQueue(label: "com.gsql.q3-master-server.queue"), socket: GCDAsyncUdpSocket())
+    private let serverOperationsQueue = DispatchQueue(label: "com.gsql.q3-server-operations.queue")
     
     public override init() {
         super.init()
