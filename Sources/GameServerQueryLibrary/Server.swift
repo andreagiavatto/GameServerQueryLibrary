@@ -53,7 +53,7 @@ public final class Server: Identifiable {
         self.map = map
         self.maxPlayers = maxPlayers
         self.currentPlayers = currentPlayers
-        self.inGamePlayers = "\(self.currentPlayers)/\(self.maxPlayers)"
+        self.inGamePlayers = "\(self.currentPlayers) / \(self.maxPlayers)"
         self.mod = serverInfo["game"] ?? "baseq3"
         
         if !gametype.isEmpty, let gtype = Int(gametype) {
@@ -83,7 +83,7 @@ public final class Server: Identifiable {
         self.ping = ping
         self.pingInt = Int(ping) ?? 0
         self.currentPlayers = currentPlayers
-        self.inGamePlayers = "\(self.currentPlayers)/\(self.maxPlayers)"
+        self.inGamePlayers = "\(self.currentPlayers) / \(self.maxPlayers)"
     }
     
 }
