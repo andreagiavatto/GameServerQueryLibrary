@@ -19,12 +19,12 @@ public final class Server: Identifiable {
     public private(set) var map: String = ""
     public private(set) var maxPlayers: String = ""
     public private(set) var currentPlayers: String = ""
-    public private(set) var mod: String? = ""
-    public private(set) var gametype: String? = ""
-    public var rules: [String: String]?
-    public var players: [Player]?
-    public private(set) var inGamePlayers: String? = ""
-    public private(set) var hostname: String? = ""
+    public private(set) var mod: String = ""
+    public private(set) var gametype: String = ""
+    public var rules: [String: String] = [:]
+    public var players: [Player] = []
+    public private(set) var inGamePlayers: String = ""
+    public private(set) var hostname: String = ""
 
     required public init(ip: String, port: String) {
         self.ip = ip
