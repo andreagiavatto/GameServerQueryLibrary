@@ -85,7 +85,7 @@ extension Q3Coordinator: MasterServerControllerDelegate {
         let servers = Q3Parser.parseServers(data)
         for ip in servers {
             let address: [String] = ip.components(separatedBy: ":")
-            serversList.append(Q3Server(ip: address[0], port: address[1]))
+            serversList.append(Server(ip: address[0], port: address[1]))
         }
         
         toRequestInfo.append(contentsOf: serversList)

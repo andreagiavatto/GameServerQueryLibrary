@@ -75,7 +75,7 @@ class Q3Parser: Parsable {
         }
         
         var rules = [String: String]()
-        var players = [Q3Player]()
+        var players = [Player]()
         
         var statusResponse = String(data: data, encoding: .ascii)
         statusResponse = statusResponse?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
@@ -141,16 +141,16 @@ class Q3Parser: Parsable {
         return "\(server):\(port)"
     }
 
-    private static func parsePlayersStatus(_ players: [String]) -> [Q3Player] {
+    private static func parsePlayersStatus(_ players: [String]) -> [Player] {
         
         guard players.count > 0 else {
             return []
         }
         
-        var q3Players = [Q3Player]()
+        var q3Players = [Player]()
         
         for playerString in players {
-            if let player = Q3Player(line: playerString) {
+            if let player = Player(line: playerString) {
                 q3Players.append(player)
             }
         }

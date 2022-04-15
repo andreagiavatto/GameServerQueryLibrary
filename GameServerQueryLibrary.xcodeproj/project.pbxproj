@@ -27,9 +27,7 @@
 		22F7B2E625587E0400DF845D /* Parsable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2C925587E0400DF845D /* Parsable.swift */; };
 		22F7B2E725587E0400DF845D /* ServerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2CB25587E0400DF845D /* ServerController.swift */; };
 		22F7B2E825587E0400DF845D /* Q3Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2CF25587E0400DF845D /* Q3Coordinator.swift */; };
-		22F7B2E925587E0400DF845D /* Q3Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2D025587E0400DF845D /* Q3Server.swift */; };
 		22F7B2EA25587E0400DF845D /* Q3ServerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2D125587E0400DF845D /* Q3ServerController.swift */; };
-		22F7B2EB25587E0400DF845D /* Q3Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2D225587E0400DF845D /* Q3Player.swift */; };
 		22F7B2EC25587E0400DF845D /* Q3Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2D325587E0400DF845D /* Q3Parser.swift */; };
 		22F7B2ED25587E0400DF845D /* Q3Operation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2D425587E0400DF845D /* Q3Operation.swift */; };
 		22F7B2EE25587E0400DF845D /* Q3MasterServerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2D525587E0400DF845D /* Q3MasterServerController.swift */; };
@@ -74,9 +72,7 @@
 		22F7B2C925587E0400DF845D /* Parsable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parsable.swift; sourceTree = "<group>"; };
 		22F7B2CB25587E0400DF845D /* ServerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerController.swift; sourceTree = "<group>"; };
 		22F7B2CF25587E0400DF845D /* Q3Coordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Q3Coordinator.swift; sourceTree = "<group>"; };
-		22F7B2D025587E0400DF845D /* Q3Server.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Q3Server.swift; sourceTree = "<group>"; };
 		22F7B2D125587E0400DF845D /* Q3ServerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Q3ServerController.swift; sourceTree = "<group>"; };
-		22F7B2D225587E0400DF845D /* Q3Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Q3Player.swift; sourceTree = "<group>"; };
 		22F7B2D325587E0400DF845D /* Q3Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Q3Parser.swift; sourceTree = "<group>"; };
 		22F7B2D425587E0400DF845D /* Q3Operation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Q3Operation.swift; sourceTree = "<group>"; };
 		22F7B2D525587E0400DF845D /* Q3MasterServerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Q3MasterServerController.swift; sourceTree = "<group>"; };
@@ -145,9 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				22F7B2CE25587E0400DF845D /* Coordinator */,
-				22F7B2D025587E0400DF845D /* Q3Server.swift */,
 				22F7B2D125587E0400DF845D /* Q3ServerController.swift */,
-				22F7B2D225587E0400DF845D /* Q3Player.swift */,
 				22F7B2D325587E0400DF845D /* Q3Parser.swift */,
 				22F7B2D425587E0400DF845D /* Q3Operation.swift */,
 				22F7B2D525587E0400DF845D /* Q3MasterServerController.swift */,
@@ -366,10 +360,8 @@
 				22F7B2E725587E0400DF845D /* ServerController.swift in Sources */,
 				22F7B2F225587E0500DF845D /* String+Q3Name.swift in Sources */,
 				22F7B2F125587E0500DF845D /* QueryOperation.swift in Sources */,
-				22F7B2EB25587E0400DF845D /* Q3Player.swift in Sources */,
 				22F7B2F525587E0500DF845D /* SupportedGames.swift in Sources */,
 				22F7B2EA25587E0400DF845D /* Q3ServerController.swift in Sources */,
-				22F7B2E925587E0400DF845D /* Q3Server.swift in Sources */,
 				22F7B2F025587E0500DF845D /* RTCWMasterServerController.swift in Sources */,
 				22F7B2F325587E0500DF845D /* GCDAsyncUDPSocketWrapper.swift in Sources */,
 				22F7B2EC25587E0400DF845D /* Q3Parser.swift in Sources */,
@@ -429,8 +421,8 @@
 					"$(inherited)",
 					"$(TOOLCHAIN_DIR)/usr/lib/swift/macosx",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = 1.0.3;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.0.4;
 				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
@@ -462,8 +454,8 @@
 					"$(inherited)",
 					"$(TOOLCHAIN_DIR)/usr/lib/swift/macosx",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = 1.0.3;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.0.4;
 				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
@@ -678,7 +670,7 @@
 			repositoryURL = "https://github.com/robbiehanson/CocoaAsyncSocket";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 7.6.4;
+				minimumVersion = 7.6.5;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
