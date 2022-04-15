@@ -10,21 +10,21 @@ import Foundation
 
 public final class Server: Identifiable {
     
-    private(set) var ping: String?
-    private(set) var pingInt: Int?
-    private(set) var ip: String
-    private(set) var port: String
-    private(set) var originalName: String?
-    private(set) var name: String?
-    private(set) var map: String?
-    private(set) var maxPlayers: String?
-    private(set) var currentPlayers: String?
-    private(set) var mod: String?
-    private(set) var gametype: String?
-    var rules: [String: String]?
-    var players: [Player]?
-    private(set) var inGamePlayers: String?
-    private(set) var hostname: String?
+    public private(set) var ping: String?
+    public private(set) var pingInt: Int?
+    public private(set) var ip: String
+    public private(set) var port: String
+    public private(set) var originalName: String?
+    public private(set) var name: String?
+    public private(set) var map: String?
+    public private(set) var maxPlayers: String?
+    public private(set) var currentPlayers: String?
+    public private(set) var mod: String?
+    public private(set) var gametype: String?
+    public var rules: [String: String]?
+    public var players: [Player]?
+    public private(set) var inGamePlayers: String?
+    public private(set) var hostname: String?
 
     required public init(ip: String, port: String) {
         self.ip = ip

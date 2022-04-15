@@ -10,11 +10,11 @@ import Foundation
 
 public final class Player: Identifiable {
     
-    let name: String
-    let ping: String
-    let score: String
+    public let name: String
+    public let ping: String
+    public let score: String
 
-    required init?(line: String) {
+    public required init?(line: String) {
         guard !line.isEmpty else {
             return nil
         }
