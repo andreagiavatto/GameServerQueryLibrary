@@ -22,7 +22,7 @@ public struct Team {
 public extension Server {
     
     var hasPlayers: Bool {
-        return !(players?.isEmpty ?? true)
+        return !players.isEmpty
     }
     
     var isATeamMode: Bool {
@@ -41,11 +41,9 @@ public extension Server {
             return Team(type: .spectators, score: "", players: spectators)
         }
         let allPlayingPlayers = playersInBlueTeam + playersInRedTeam
-        if let players = players {
-            spectators = players.enumerated().filter { (index, _) -> Bool in
-                !allPlayingPlayers.contains("\(index + 1)")
-            }.map { $1 }
-        }
+        spectators = players.enumerated().filter { (index, _) -> Bool in
+            !allPlayingPlayers.contains("\(index + 1)")
+        }.map { $1 }
         return Team(type: .spectators, score: "", players: spectators)
     }
     
@@ -60,11 +58,9 @@ public extension Server {
         guard let scoreRedTeam = teamRedScoreInRules else {
             return Team(type: .red, score: "--", players: redPlayers)
         }
-        if let players = players {
-            playersInRedTeam.forEach { position in
-                if let index = Int(position), index - 1 < players.count, index - 1 >= 0 {
-                    redPlayers.append(players[index - 1])
-                }
+        playersInRedTeam.forEach { position in
+            if let index = Int(position), index - 1 < players.count, index - 1 >= 0 {
+                redPlayers.append(players[index - 1])
             }
         }
         redPlayers.sort { (first, second) -> Bool in
@@ -84,11 +80,9 @@ public extension Server {
         guard let scoreBlueTeam = teamBlueScoreInRules else {
             return Team(type: .blue, score: "--", players: bluePlayers)
         }
-        if let players = players {
-            playersInBlueTeam.forEach { position in
-                if let index = Int(position), index - 1 < players.count, index - 1 >= 0 {
-                    bluePlayers.append(players[index - 1])
-                }
+        playersInBlueTeam.forEach { position in
+            if let index = Int(position), index - 1 < players.count, index - 1 >= 0 {
+                bluePlayers.append(players[index - 1])
             }
         }
         bluePlayers.sort { (first, second) -> Bool in
@@ -98,18 +92,18 @@ public extension Server {
     }
     
     private var redPlayersInRules: String? {
-        return rules?["players_red"] ?? rules?["Players_Red"]
+        return rules["players_red"] ?? rules["Players_Red"]
     }
     
     private var bluePlayersInRules: String? {
-        return rules?["players_blue"] ?? rules?["Players_Blue"]
+        return rules["players_blue"] ?? rules["Players_Blue"]
     }
     
     private var teamRedScoreInRules: String? {
-        return rules?["score_red"] ?? rules?["Score_Red"]
+        return rules["score_red"] ?? rules["Score_Red"]
     }
     
     private var teamBlueScoreInRules: String? {
-        return rules?["score_blue"] ?? rules?["Score_Blue"]
+        return rules["score_blue"] ?? rules["Score_Blue"]
     }
 }
