@@ -23,12 +23,13 @@ public final class Server: Identifiable {
     public private(set) var gametype: String = ""
     public var rules: [String: String] = [:]
     public var players: [Player] = []
-    public private(set) var inGamePlayers: String = ""
-    public private(set) var hostname: String = ""
+    public private(set) var inGamePlayers: String = "0/0"
+    public private(set) var hostname: String
 
     required public init(ip: String, port: String) {
         self.ip = ip
         self.port = port
+        self.hostname = "\(ip):\(port)"
     }
     
     func update(with serverInfo: [String: String]?, ping: String) {
@@ -52,6 +53,7 @@ public final class Server: Identifiable {
         self.map = map
         self.maxPlayers = maxPlayers
         self.currentPlayers = currentPlayers
+        self.inGamePlayers = "\(self.currentPlayers)/\(self.maxPlayers)"
         self.mod = serverInfo["game"] ?? "baseq3"
         
         if !gametype.isEmpty, let gtype = Int(gametype) {
@@ -81,6 +83,7 @@ public final class Server: Identifiable {
         self.ping = ping
         self.pingInt = Int(ping) ?? 0
         self.currentPlayers = currentPlayers
+        self.inGamePlayers = "\(self.currentPlayers)/\(self.maxPlayers)"
     }
     
 }
