@@ -68,13 +68,13 @@ class Q3Parser: Parsable {
         return nil
     }
 
-    static func parseServerStatus(_ data: Data) -> (rules: [String: String], players: [Player])? {
+    static func parseServerStatus(_ data: Data) -> (rules: [Setting], players: [Player])? {
         
         guard data.count > 0 else {
             return nil
         }
         
-        var rules = [String: String]()
+        var rules = [Setting]()
         var players = [Player]()
         
         var statusResponse = String(data: data, encoding: .ascii)
@@ -101,9 +101,8 @@ class Q3Parser: Parsable {
             }
             
             if keys.count == values.count {
-                
                 keys.enumerated().forEach { (i) -> () in
-                    rules[i.element] = values[i.offset]
+                    rules.append(Setting(key: i.element, value: values[i.offset]))
                 }
             }
         }

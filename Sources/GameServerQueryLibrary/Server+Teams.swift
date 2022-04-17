@@ -92,18 +92,18 @@ public extension Server {
     }
     
     private var redPlayersInRules: String? {
-        return rules["players_red"] ?? rules["Players_Red"]
+        return rules.first(where: { $0.key == "players_red" || $0.key == "Players_Red" })?.value
     }
     
     private var bluePlayersInRules: String? {
-        return rules["players_blue"] ?? rules["Players_Blue"]
+        return rules.first(where: { $0.key == "players_blue" || $0.key == "Players_Blue" })?.value
     }
     
     private var teamRedScoreInRules: String? {
-        return rules["score_red"] ?? rules["Score_Red"]
+        return rules.first(where: { $0.key == "score_red" || $0.key == "Score_Red" })?.value
     }
     
     private var teamBlueScoreInRules: String? {
-        return rules["score_blue"] ?? rules["Score_Blue"]
+        return rules.first(where: { $0.key == "score_blue" || $0.key == "Score_Blue" })?.value
     }
 }

@@ -21,7 +21,7 @@ public final class Server: Identifiable {
     public private(set) var currentPlayers: String = ""
     public private(set) var mod: String = ""
     public private(set) var gametype: String = ""
-    public var rules: [String: String] = [:]
+    public var rules: [Setting] = []
     public var players: [Player] = []
     public private(set) var inGamePlayers: String = "0/0"
     public private(set) var hostname: String
@@ -86,4 +86,14 @@ public final class Server: Identifiable {
         self.inGamePlayers = "\(self.currentPlayers) / \(self.maxPlayers)"
     }
     
+}
+
+public final class Setting: Identifiable {
+    public let key: String
+    public let value: String
+    
+    init(key: String, value: String) {
+        self.key = key
+        self.value = value
+    }
 }
