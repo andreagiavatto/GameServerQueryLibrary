@@ -6,7 +6,6 @@
 //
 //
 
-import AsyncAlgorithms
 import Combine
 import Foundation
 
@@ -21,7 +20,7 @@ class Q3Coordinator: Coordinator {
     private let q3master = Q3Master()
     private var q3InfoServer: Q3Server?
     private var q3StatusServer: Q3Server?
-//    private var runningGroup: TaskGroup<<#ChildTaskResult: Sendable#>>?
+    private var fetchingServersTask: Task<Void, Never>?
     
     public func getServersList(ip: String, port: String) async {
         do {
@@ -33,25 +32,27 @@ class Q3Coordinator: Coordinator {
     }
     
     public func fetchServersInfo(for servers: [Server]) async {
-        clearServers()
+        reset()
         print(">>> Fetched \(servers.count) servers from master server")
         guard !servers.isEmpty else {
             return
         }
         
-        await withTaskGroup(of: Server.self, body: { group in
-            for server in servers {
-                group.addTask {
-                    let infoServer = await self.updateServerInfo(server)
-                    let statusServer = await self.updateServerStatus(infoServer)
-                    return statusServer
+        fetchingServersTask = Task {
+            await withTaskGroup(of: Server.self, body: { group in
+                for server in servers {
+                    group.addTask {
+                        let infoServer = await self.updateServerInfo(server)
+                        let statusServer = await self.updateServerStatus(infoServer)
+                        return statusServer
+                    }
                 }
-            }
-            
-            for await updatedServer in group {
-                self.servers.value.append(updatedServer)
-            }
-        })
+                
+                for await updatedServer in group {
+                    self.servers.value.append(updatedServer)
+                }
+            })
+        }
     }
 
     func updateServerInfo(_ server: Server) async -> Server {
@@ -78,7 +79,8 @@ class Q3Coordinator: Coordinator {
         return server
     }
     
-    private func clearServers() {
+    private func reset() {
+        fetchingServersTask?.cancel()
         q3InfoServer = nil
         q3StatusServer = nil
         servers.value.removeAll()
