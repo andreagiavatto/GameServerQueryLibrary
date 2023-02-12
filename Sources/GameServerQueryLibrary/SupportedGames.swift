@@ -20,7 +20,6 @@ public enum SupportedGames: CaseIterable {
     
     case quake3
     case urbanTerror
-//    case rtcw
     
     var name: String {
         switch self {
@@ -28,8 +27,6 @@ public enum SupportedGames: CaseIterable {
             return "Quake 3 Arena"
         case .urbanTerror:
             return "Urban Terror"
-//        case .rtcw:
-//            return "Return to Castle Wolfenstein"
         }
     }
     
@@ -37,16 +34,14 @@ public enum SupportedGames: CaseIterable {
         switch self {
         case .quake3:
             return [MasterServer(hostname: "master.ioquake3.org", port:"27950"),
-                    MasterServer(hostname: "master3.idsoftware.com", port:"27950"),
                     MasterServer(hostname: "master0.excessiveplus.net", port:"27950"),
                     MasterServer(hostname: "master.maverickservers.com", port:"27950"),
-                    MasterServer(hostname: "dpmaster.deathmask.net", port:"27950")]
+                    MasterServer(hostname: "dpmaster.deathmask.net", port:"27950"),
+                    MasterServer(hostname: "master.huxxer.de", port:"27950"),
+                    MasterServer(hostname: "master.fpsclasico.de", port:"27950"),]
         case .urbanTerror:
-            return [MasterServer(hostname: "master.urbanterror.info", port: "27900")]
-//        case .rtcw:
-//            return [MasterServer(hostname: "master0.etmaster.net", port: "27950"),
-//                    MasterServer(hostname: "wolfmaster.idsoftware.com", port: "27950"),
-//                    MasterServer(hostname: "master.iortcw.org", port: "27950")]
+            return [MasterServer(hostname: "master.urbanterror.info", port: "27900"),
+                    MasterServer(hostname: "master2.urbanterror.info", port: "27900")]
         }
     }
     
@@ -56,8 +51,6 @@ public enum SupportedGames: CaseIterable {
             return Q3Coordinator()
         case .urbanTerror:
             return Q3Coordinator()
-//        case .rtcw:
-//            return RTCWCoordinator()
         }
     }
     
@@ -67,8 +60,6 @@ public enum SupportedGames: CaseIterable {
             return MasterServer(hostname: "dpmaster.deathmask.net", port:"27950")
         case .urbanTerror:
             return MasterServer(hostname: "master.urbanterror.info", port: "27900")
-//        case .rtcw:
-//            return MasterServer(hostname: "master0.etmaster.net", port: "27950")
         }
     }
 
