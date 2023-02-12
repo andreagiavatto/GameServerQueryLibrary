@@ -106,7 +106,7 @@ extension RTCWCoordinator: ServerControllerDelegate {
         }
         
         if let serverInfo = Q3Parser.parseServer(operation.data) {
-            server.update(with: serverInfo, ping: String(format: "%.0f", (operation.executionTime * 1000).rounded()))
+            server.update(with: serverInfo)
             delegate?.coordinator(self, didFinishFetchingInfoFor: server)
         } else {
             delegate?.coordinator(self, didFailWith: .parseError(server))

@@ -32,7 +32,7 @@ public final class Server: Identifiable {
         self.hostname = "\(ip):\(port)"
     }
     
-    func update(with serverInfo: [String: String]?, ping: String) {
+    func update(with serverInfo: [String: String]?) {
         guard let serverInfo = serverInfo, !serverInfo.isEmpty else {
             return
         }
@@ -47,8 +47,6 @@ public final class Server: Identifiable {
             return
         }
 
-        self.ping = ping
-        self.pingInt = Int(ping) ?? 0
         self.originalName = originalName
         self.map = map
         self.maxPlayers = maxPlayers

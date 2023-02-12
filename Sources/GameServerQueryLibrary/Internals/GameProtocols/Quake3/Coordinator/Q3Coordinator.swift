@@ -6,146 +6,81 @@
 //
 //
 
+import AsyncAlgorithms
+import Combine
 import Foundation
-import CocoaAsyncSocket
 
-class Q3Coordinator: NSObject, Coordinator {
-    
-    public weak var delegate: CoordinatorDelegate?
-
-    fileprivate let serverController = Q3ServerController()
-    private(set) var serversList = [Server]()
-    private var toRequestInfo = [Server]()
-    private let masterServerController = Q3MasterServerController(queue: DispatchQueue(label: "com.gsql.q3-master-server.queue"), socket: GCDAsyncUdpSocket())
-    private let serverOperationsQueue = DispatchQueue(label: "com.gsql.q3-server-operations.queue")
-    
-    public override init() {
-        super.init()
-        masterServerController.delegate = self
-        serverController.delegate = self
-    }
-    
-    public func getServersList(host: String, port: String) {
-        clearServers()
-        masterServerController.startFetchingServersList(host: host, port: port)
-    }
-    
-    func refreshStatus(for servers: [Server]) {
-        clearServers()
-        serversList = servers
-        toRequestInfo.append(contentsOf: serversList)
-        delegate?.didFinishFetchingServersList(for: self)
-    }
-    
-    public func fetchServersInfo() {
-        guard !toRequestInfo.isEmpty else {
-            return
-        }
-        serverController.requestServersInfo(toRequestInfo)
-        toRequestInfo.removeAll()
-    }
-
-    public func info(forServer server: Server) {
-        serverController.infoForServer(ip: server.ip, port: server.port)
-    }
-    
-    public func status(forServer server: Server) {
-        serverController.statusForServer(ip: server.ip, port: server.port)
-    }
-    
-    func server(ip: String, port: String) -> Server? {
-        return serversList.first(where: {$0.ip == ip && $0.port == port})
-    }
-    
-    @discardableResult
-    func removeTimeoutServer(ip: String, port: String) -> Server? {
-        if let index = serversList.firstIndex(where: {$0.ip == ip && $0.port == port}) {
-            let server = serversList[index]
-            serversList.remove(at: index)
-            return server
-        }
-        return nil
-    }
-    
-    func clearServers() {
-        serversList.removeAll()
-        toRequestInfo.removeAll()
-        serverController.clearPendingRequests()
-    }
+enum Q3Error: Error {
+    case emptyServers
+    case infoError(Error)
+    case status(Error)
 }
 
-extension Q3Coordinator: MasterServerControllerDelegate {
+class Q3Coordinator: Coordinator {
+    private(set) var servers = CurrentValueSubject<[Server], Never>([])
+    private let q3master = Q3Master()
+    private var q3InfoServer: Q3Server?
+    private var q3StatusServer: Q3Server?
+//    private var runningGroup: TaskGroup<<#ChildTaskResult: Sendable#>>?
     
-    func didStartFetchingServers(forMasterController controller: MasterServerController) {
-        
-        delegate?.didStartFetchingServersList(for: self)
-    }
-    
-    func masterController(_ controller: MasterServerController, didFinishFetchingServersWith data: Data) {
-        let servers = Q3Parser.parseServers(data)
-        for ip in servers {
-            let address: [String] = ip.components(separatedBy: ":")
-            serversList.append(Server(ip: address[0], port: address[1]))
+    public func getServersList(ip: String, port: String) async {
+        do {
+            let servers = try await q3master.getServers(ip: ip, port: port)
+            await fetchServersInfo(for: servers)
+        } catch {
+            print(">>> MASTER \(error)")
         }
-        
-        toRequestInfo.append(contentsOf: serversList)
-        delegate?.didFinishFetchingServersList(for: self)
     }
     
-    func masterController(_ controller: MasterServerController, didFinishWithError error: Error?) {
-
-    }
-}
-
-extension Q3Coordinator: ServerControllerDelegate {
-    
-    func serverController(_ controller: ServerController, didFinishFetchingServerInfoWith operation: QueryOperation) {
-
-        guard let server = server(ip: operation.ip, port: "\(operation.port)") else {
+    public func fetchServersInfo(for servers: [Server]) async {
+        clearServers()
+        print(">>> Fetched \(servers.count) servers from master server")
+        guard !servers.isEmpty else {
             return
         }
         
-        if let serverInfo = Q3Parser.parseServer(operation.data) {
-            server.update(with: serverInfo, ping: String(format: "%.0f", (operation.executionTime * 1000).rounded()))
-            delegate?.coordinator(self, didFinishFetchingInfoFor: server)
-        } else {
-            delegate?.coordinator(self, didFailWith: .parseError(server))
-        }
-    }
-    
-    func serverController(_ controller: ServerController, didFinishFetchingServerStatusWith operation: QueryOperation) {
-  
-        guard let server = server(ip: operation.ip, port: "\(operation.port)") else {
-            return
-        }
-        
-        if let serverStatus = Q3Parser.parseServerStatus(operation.data) {
-            server.rules = serverStatus.rules
-            server.players = serverStatus.players.sorted { (first, second) -> Bool in
-                guard let firstScore = Int(first.score), let secondScore = Int(second.score) else {
-                    return false
+        await withTaskGroup(of: Server.self, body: { group in
+            for server in servers {
+                group.addTask {
+                    let infoServer = await self.updateServerInfo(server)
+                    let statusServer = await self.updateServerStatus(infoServer)
+                    return statusServer
                 }
-                return firstScore > secondScore
             }
-            server.update(currentPlayers: String(serverStatus.players.count), ping: String(format: "%.0f", (operation.executionTime * 1000).rounded()))
-            delegate?.coordinator(self, didFinishFetchingStatusFor: server)
-        } else {
-            delegate?.coordinator(self, didFailWith: .parseError(server))
+            
+            for await updatedServer in group {
+                self.servers.value.append(updatedServer)
+            }
+        })
+    }
+
+    func updateServerInfo(_ server: Server) async -> Server {
+        let q3Server = Q3Server(server: server)
+        q3InfoServer = q3Server
+        do {
+            try await q3Server.updateInfo()
+            return q3Server.server
+        } catch {
+            print(">>> INFO \(error)")
         }
+        return server
     }
     
-    func serverController(_ controller: ServerController, didTimeoutFetchingServerInfoWith operation: QueryOperation) {
-        
-        _ = serverOperationsQueue.sync {
-            removeTimeoutServer(ip: operation.ip, port: String(operation.port))
+    func updateServerStatus(_ server: Server) async -> Server {
+        let q3Server = Q3Server(server: server)
+        q3StatusServer = q3Server
+        do {
+            try await q3Server.updateStatus()
+            return q3Server.server
+        } catch {
+            print(">>> STATUS \(error)")
         }
+        return server
     }
     
-    func serverController(_ controller: ServerController, didFinishWithError error: Error?) {
-        delegate?.coordinator(self, didFailWith: .custom(error?.localizedDescription))
-    }
-    
-    func serverController(_ controller: ServerController, didFinishFetchingServersInfo: [Server]) {
-        delegate?.didFinishFetchingServersInfo(for: self)
+    private func clearServers() {
+        q3InfoServer = nil
+        q3StatusServer = nil
+        servers.value.removeAll()
     }
 }

@@ -21,18 +21,17 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		2227D403296C11BB00F64A30 /* Q3Master.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E27BF8294F686E000D1C70 /* Q3Master.swift */; };
+		222B1FDC297BD5B800A9E9BF /* AsyncAlgorithms in Frameworks */ = {isa = PBXBuildFile; productRef = 222B1FDB297BD5B800A9E9BF /* AsyncAlgorithms */; };
+		22AE2052297AA25600CE1FA8 /* Q3Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AE2051297AA25600CE1FA8 /* Q3Server.swift */; };
+		22EC4D62294F33C9004C2967 /* AsyncSocketWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EC4D61294F33C9004C2967 /* AsyncSocketWrapper.swift */; };
 		22F7B2E325587E0400DF845D /* GSQLError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2C625587E0400DF845D /* GSQLError.swift */; };
 		22F7B2E425587E0400DF845D /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2C725587E0400DF845D /* Server.swift */; };
 		22F7B2E525587E0400DF845D /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2C825587E0400DF845D /* Game.swift */; };
 		22F7B2E625587E0400DF845D /* Parsable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2C925587E0400DF845D /* Parsable.swift */; };
 		22F7B2E725587E0400DF845D /* ServerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2CB25587E0400DF845D /* ServerController.swift */; };
 		22F7B2E825587E0400DF845D /* Q3Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2CF25587E0400DF845D /* Q3Coordinator.swift */; };
-		22F7B2EA25587E0400DF845D /* Q3ServerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2D125587E0400DF845D /* Q3ServerController.swift */; };
 		22F7B2EC25587E0400DF845D /* Q3Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2D325587E0400DF845D /* Q3Parser.swift */; };
-		22F7B2ED25587E0400DF845D /* Q3Operation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2D425587E0400DF845D /* Q3Operation.swift */; };
-		22F7B2EE25587E0400DF845D /* Q3MasterServerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2D525587E0400DF845D /* Q3MasterServerController.swift */; };
-		22F7B2EF25587E0500DF845D /* RTCWCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2D825587E0400DF845D /* RTCWCoordinator.swift */; };
-		22F7B2F025587E0500DF845D /* RTCWMasterServerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2D925587E0400DF845D /* RTCWMasterServerController.swift */; };
 		22F7B2F125587E0500DF845D /* QueryOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2DA25587E0400DF845D /* QueryOperation.swift */; };
 		22F7B2F225587E0500DF845D /* String+Q3Name.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2DC25587E0400DF845D /* String+Q3Name.swift */; };
 		22F7B2F325587E0500DF845D /* GCDAsyncUDPSocketWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2DD25587E0400DF845D /* GCDAsyncUDPSocketWrapper.swift */; };
@@ -44,7 +43,6 @@
 		22F7B2FB25587F5300DF845D /* CocoaAsyncSocket in Frameworks */ = {isa = PBXBuildFile; productRef = 22F7B2FA25587F5300DF845D /* CocoaAsyncSocket */; };
 		22F7B3002558802500DF845D /* Q3MasterServerControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2FD2558802500DF845D /* Q3MasterServerControllerTests.swift */; };
 		22F7B3012558802500DF845D /* GCDAsyncUDPSocketWrapperMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2FF2558802500DF845D /* GCDAsyncUDPSocketWrapperMock.swift */; };
-		OBJ_30 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
 		OBJ_44 /* GameServerQueryLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "GameServerQueryLibrary::GameServerQueryLibrary::Product" /* GameServerQueryLibrary.framework */; };
 /* End PBXBuildFile section */
 
@@ -66,16 +64,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		22AE2051297AA25600CE1FA8 /* Q3Server.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Q3Server.swift; sourceTree = "<group>"; };
+		22E27BF8294F686E000D1C70 /* Q3Master.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Q3Master.swift; sourceTree = "<group>"; };
+		22EC4D61294F33C9004C2967 /* AsyncSocketWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncSocketWrapper.swift; sourceTree = "<group>"; };
 		22F7B2C625587E0400DF845D /* GSQLError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSQLError.swift; sourceTree = "<group>"; };
 		22F7B2C725587E0400DF845D /* Server.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Server.swift; sourceTree = "<group>"; };
 		22F7B2C825587E0400DF845D /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		22F7B2C925587E0400DF845D /* Parsable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parsable.swift; sourceTree = "<group>"; };
 		22F7B2CB25587E0400DF845D /* ServerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerController.swift; sourceTree = "<group>"; };
 		22F7B2CF25587E0400DF845D /* Q3Coordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Q3Coordinator.swift; sourceTree = "<group>"; };
-		22F7B2D125587E0400DF845D /* Q3ServerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Q3ServerController.swift; sourceTree = "<group>"; };
 		22F7B2D325587E0400DF845D /* Q3Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Q3Parser.swift; sourceTree = "<group>"; };
-		22F7B2D425587E0400DF845D /* Q3Operation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Q3Operation.swift; sourceTree = "<group>"; };
-		22F7B2D525587E0400DF845D /* Q3MasterServerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Q3MasterServerController.swift; sourceTree = "<group>"; };
 		22F7B2D825587E0400DF845D /* RTCWCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTCWCoordinator.swift; sourceTree = "<group>"; };
 		22F7B2D925587E0400DF845D /* RTCWMasterServerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTCWMasterServerController.swift; sourceTree = "<group>"; };
 		22F7B2DA25587E0400DF845D /* QueryOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryOperation.swift; sourceTree = "<group>"; };
@@ -100,6 +98,7 @@
 			buildActionMask = 0;
 			files = (
 				22F7B2FB25587F5300DF845D /* CocoaAsyncSocket in Frameworks */,
+				222B1FDC297BD5B800A9E9BF /* AsyncAlgorithms in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -124,6 +123,7 @@
 				22F7B2DB25587E0400DF845D /* Utilities */,
 				22F7B2DD25587E0400DF845D /* GCDAsyncUDPSocketWrapper.swift */,
 				22F7B2DE25587E0400DF845D /* MasterServerController.swift */,
+				22EC4D61294F33C9004C2967 /* AsyncSocketWrapper.swift */,
 			);
 			path = Internals;
 			sourceTree = "<group>";
@@ -141,10 +141,9 @@
 			isa = PBXGroup;
 			children = (
 				22F7B2CE25587E0400DF845D /* Coordinator */,
-				22F7B2D125587E0400DF845D /* Q3ServerController.swift */,
 				22F7B2D325587E0400DF845D /* Q3Parser.swift */,
-				22F7B2D425587E0400DF845D /* Q3Operation.swift */,
-				22F7B2D525587E0400DF845D /* Q3MasterServerController.swift */,
+				22E27BF8294F686E000D1C70 /* Q3Master.swift */,
+				22AE2051297AA25600CE1FA8 /* Q3Server.swift */,
 			);
 			path = Quake3;
 			sourceTree = "<group>";
@@ -277,6 +276,7 @@
 			name = GameServerQueryLibrary;
 			packageProductDependencies = (
 				22F7B2FA25587F5300DF845D /* CocoaAsyncSocket */,
+				222B1FDB297BD5B800A9E9BF /* AsyncAlgorithms */,
 			);
 			productName = GameServerQueryLibrary;
 			productReference = "GameServerQueryLibrary::GameServerQueryLibrary::Product" /* GameServerQueryLibrary.framework */;
@@ -332,6 +332,7 @@
 			mainGroup = OBJ_5;
 			packageReferences = (
 				22F7B2F925587F5300DF845D /* XCRemoteSwiftPackageReference "CocoaAsyncSocket" */,
+				222B1FDA297BD5B800A9E9BF /* XCRemoteSwiftPackageReference "swift-async-algorithms" */,
 			);
 			productRefGroup = OBJ_14 /* Products */;
 			projectDirPath = "";
@@ -350,26 +351,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				22F7B2EF25587E0500DF845D /* RTCWCoordinator.swift in Sources */,
 				22F7B2F725587E0500DF845D /* Server+Teams.swift in Sources */,
 				22F7B2E825587E0400DF845D /* Q3Coordinator.swift in Sources */,
-				22F7B2EE25587E0400DF845D /* Q3MasterServerController.swift in Sources */,
 				22F7B2F825587E0500DF845D /* Player.swift in Sources */,
 				22F7B2E625587E0400DF845D /* Parsable.swift in Sources */,
 				22F7B2F425587E0500DF845D /* MasterServerController.swift in Sources */,
 				22F7B2E725587E0400DF845D /* ServerController.swift in Sources */,
 				22F7B2F225587E0500DF845D /* String+Q3Name.swift in Sources */,
+				2227D403296C11BB00F64A30 /* Q3Master.swift in Sources */,
 				22F7B2F125587E0500DF845D /* QueryOperation.swift in Sources */,
 				22F7B2F525587E0500DF845D /* SupportedGames.swift in Sources */,
-				22F7B2EA25587E0400DF845D /* Q3ServerController.swift in Sources */,
-				22F7B2F025587E0500DF845D /* RTCWMasterServerController.swift in Sources */,
 				22F7B2F325587E0500DF845D /* GCDAsyncUDPSocketWrapper.swift in Sources */,
+				22EC4D62294F33C9004C2967 /* AsyncSocketWrapper.swift in Sources */,
 				22F7B2EC25587E0400DF845D /* Q3Parser.swift in Sources */,
 				22F7B2E425587E0400DF845D /* Server.swift in Sources */,
-				22F7B2ED25587E0400DF845D /* Q3Operation.swift in Sources */,
 				22F7B2E325587E0400DF845D /* GSQLError.swift in Sources */,
 				22F7B2E525587E0400DF845D /* Game.swift in Sources */,
 				22F7B2F625587E0500DF845D /* Coordinator.swift in Sources */,
+				22AE2052297AA25600CE1FA8 /* Q3Server.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -377,7 +376,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				OBJ_30 /* Package.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -665,6 +663,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		222B1FDA297BD5B800A9E9BF /* XCRemoteSwiftPackageReference "swift-async-algorithms" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-async-algorithms.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.0.4;
+			};
+		};
 		22F7B2F925587F5300DF845D /* XCRemoteSwiftPackageReference "CocoaAsyncSocket" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/robbiehanson/CocoaAsyncSocket";
@@ -676,6 +682,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		222B1FDB297BD5B800A9E9BF /* AsyncAlgorithms */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 222B1FDA297BD5B800A9E9BF /* XCRemoteSwiftPackageReference "swift-async-algorithms" */;
+			productName = AsyncAlgorithms;
+		};
 		22F7B2FA25587F5300DF845D /* CocoaAsyncSocket */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 22F7B2F925587F5300DF845D /* XCRemoteSwiftPackageReference "CocoaAsyncSocket" */;

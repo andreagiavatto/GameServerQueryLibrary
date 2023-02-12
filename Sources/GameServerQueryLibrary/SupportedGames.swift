@@ -20,7 +20,7 @@ public enum SupportedGames: CaseIterable {
     
     case quake3
     case urbanTerror
-    case rtcw
+//    case rtcw
     
     var name: String {
         switch self {
@@ -28,8 +28,8 @@ public enum SupportedGames: CaseIterable {
             return "Quake 3 Arena"
         case .urbanTerror:
             return "Urban Terror"
-        case .rtcw:
-            return "Return to Castle Wolfenstein"
+//        case .rtcw:
+//            return "Return to Castle Wolfenstein"
         }
     }
     
@@ -43,10 +43,10 @@ public enum SupportedGames: CaseIterable {
                     MasterServer(hostname: "dpmaster.deathmask.net", port:"27950")]
         case .urbanTerror:
             return [MasterServer(hostname: "master.urbanterror.info", port: "27900")]
-        case .rtcw:
-            return [MasterServer(hostname: "master0.etmaster.net", port: "27950"),
-                    MasterServer(hostname: "wolfmaster.idsoftware.com", port: "27950"),
-                    MasterServer(hostname: "master.iortcw.org", port: "27950")]
+//        case .rtcw:
+//            return [MasterServer(hostname: "master0.etmaster.net", port: "27950"),
+//                    MasterServer(hostname: "wolfmaster.idsoftware.com", port: "27950"),
+//                    MasterServer(hostname: "master.iortcw.org", port: "27950")]
         }
     }
     
@@ -56,8 +56,8 @@ public enum SupportedGames: CaseIterable {
             return Q3Coordinator()
         case .urbanTerror:
             return Q3Coordinator()
-        case .rtcw:
-            return RTCWCoordinator()
+//        case .rtcw:
+//            return RTCWCoordinator()
         }
     }
     
@@ -67,8 +67,8 @@ public enum SupportedGames: CaseIterable {
             return MasterServer(hostname: "dpmaster.deathmask.net", port:"27950")
         case .urbanTerror:
             return MasterServer(hostname: "master.urbanterror.info", port: "27900")
-        case .rtcw:
-            return MasterServer(hostname: "master0.etmaster.net", port: "27950")
+//        case .rtcw:
+//            return MasterServer(hostname: "master0.etmaster.net", port: "27950")
         }
     }
 
