@@ -59,8 +59,7 @@ class Q3Coordinator: Coordinator {
         let q3Server = Q3Server(server: server)
         q3InfoServer = q3Server
         do {
-            try await q3Server.updateInfo()
-            return q3Server.server
+            return try await q3Server.updateInfo()
         } catch {
             print(">>> INFO \(error)")
         }
@@ -71,8 +70,7 @@ class Q3Coordinator: Coordinator {
         let q3Server = Q3Server(server: server)
         q3StatusServer = q3Server
         do {
-            try await q3Server.updateStatus()
-            return q3Server.server
+            return try await q3Server.updateStatus()
         } catch {
             print(">>> STATUS \(error)")
         }
