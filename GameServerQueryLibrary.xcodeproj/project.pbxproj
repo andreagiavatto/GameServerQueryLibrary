@@ -22,6 +22,7 @@
 
 /* Begin PBXBuildFile section */
 		2227D403296C11BB00F64A30 /* Q3Master.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E27BF8294F686E000D1C70 /* Q3Master.swift */; };
+		225FEF85299A3CC80084C5C0 /* AsyncAlgorithms in Frameworks */ = {isa = PBXBuildFile; productRef = 225FEF84299A3CC80084C5C0 /* AsyncAlgorithms */; };
 		22AE2052297AA25600CE1FA8 /* Q3Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AE2051297AA25600CE1FA8 /* Q3Server.swift */; };
 		22EC4D62294F33C9004C2967 /* AsyncSocketWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EC4D61294F33C9004C2967 /* AsyncSocketWrapper.swift */; };
 		22F7B2E325587E0400DF845D /* GSQLError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7B2C625587E0400DF845D /* GSQLError.swift */; };
@@ -95,6 +96,7 @@
 			buildActionMask = 0;
 			files = (
 				22F7B2FB25587F5300DF845D /* CocoaAsyncSocket in Frameworks */,
+				225FEF85299A3CC80084C5C0 /* AsyncAlgorithms in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -254,6 +256,7 @@
 			name = GameServerQueryLibrary;
 			packageProductDependencies = (
 				22F7B2FA25587F5300DF845D /* CocoaAsyncSocket */,
+				225FEF84299A3CC80084C5C0 /* AsyncAlgorithms */,
 			);
 			productName = GameServerQueryLibrary;
 			productReference = "GameServerQueryLibrary::GameServerQueryLibrary::Product" /* GameServerQueryLibrary.framework */;
@@ -309,6 +312,7 @@
 			mainGroup = OBJ_5;
 			packageReferences = (
 				22F7B2F925587F5300DF845D /* XCRemoteSwiftPackageReference "CocoaAsyncSocket" */,
+				225FEF83299A3CC80084C5C0 /* XCRemoteSwiftPackageReference "swift-async-algorithms" */,
 			);
 			productRefGroup = OBJ_14 /* Products */;
 			projectDirPath = "";
@@ -396,7 +400,7 @@
 					"$(inherited)",
 					"$(TOOLCHAIN_DIR)/usr/lib/swift/macosx",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0.4;
 				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "$(inherited)";
@@ -430,7 +434,7 @@
 					"$(inherited)",
 					"$(TOOLCHAIN_DIR)/usr/lib/swift/macosx",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0.4;
 				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "$(inherited)";
@@ -512,7 +516,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_SWIFT_FLAGS = "$(inherited) -DXcode";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -556,7 +560,7 @@
 					"@loader_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
@@ -587,7 +591,7 @@
 					"@loader_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
@@ -641,7 +645,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				OTHER_SWIFT_FLAGS = "$(inherited) -DXcode";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -704,6 +708,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		225FEF83299A3CC80084C5C0 /* XCRemoteSwiftPackageReference "swift-async-algorithms" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-async-algorithms.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.0.4;
+			};
+		};
 		22F7B2F925587F5300DF845D /* XCRemoteSwiftPackageReference "CocoaAsyncSocket" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/robbiehanson/CocoaAsyncSocket";
@@ -715,6 +727,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		225FEF84299A3CC80084C5C0 /* AsyncAlgorithms */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 225FEF83299A3CC80084C5C0 /* XCRemoteSwiftPackageReference "swift-async-algorithms" */;
+			productName = AsyncAlgorithms;
+		};
 		22F7B2FA25587F5300DF845D /* CocoaAsyncSocket */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 22F7B2F925587F5300DF845D /* XCRemoteSwiftPackageReference "CocoaAsyncSocket" */;

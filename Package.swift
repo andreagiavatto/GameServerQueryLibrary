@@ -7,7 +7,7 @@ let package = Package(
     name: "GameServerQueryLibrary",
     platforms: [
         // Add support for all platforms starting from a specific version.
-        .macOS(.v12),
+        .macOS(.v13),
         .iOS(.v15),
         .watchOS(.v4),
     ],

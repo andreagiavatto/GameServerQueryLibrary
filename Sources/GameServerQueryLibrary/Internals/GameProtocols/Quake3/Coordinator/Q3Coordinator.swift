@@ -8,6 +8,7 @@
 
 import Combine
 import Foundation
+import AsyncAlgorithms
 
 enum Q3Error: Error {
     case emptyServers
@@ -39,17 +40,18 @@ class Q3Coordinator: Coordinator {
         }
         
         fetchingServersTask = Task {
-            await withTaskGroup(of: Server.self, body: { group in
+            await withTaskGroup(of: Server?.self, body: { group in
                 for server in servers {
+                    try? await Task.sleep(for: .milliseconds(100))
                     group.addTask {
-                        let infoServer = await self.updateServerInfo(server)
-                        let statusServer = await self.updateServerStatus(infoServer)
-                        return statusServer
+                        let q3Server = Q3Server(server: server)
+                        let infoServer = try? await q3Server.updateInfo()
+                        if infoServer != nil, let updatedServer = try? await q3Server.updateStatus() {
+                            self.servers.value.append(updatedServer)
+                            return updatedServer
+                        }
+                        return nil
                     }
-                }
-                
-                for await updatedServer in group {
-                    self.servers.value.append(updatedServer)
                 }
             })
         }

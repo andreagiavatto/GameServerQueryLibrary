@@ -27,12 +27,7 @@ class AsyncSocketWrapper: NSObject {
     private(set) var eotMarker: [UInt8]?
     
     private let timeout: TimeInterval
-    private lazy var socket: GCDAsyncUdpSocket = {
-        let socket = GCDAsyncUdpSocket(delegate: self, delegateQueue: processingQueue)
-        socket.setMaxReceiveIPv4BufferSize(8_192)
-        socket.setMaxReceiveIPv6BufferSize(8_192)
-        return socket
-    }()
+    private var socket: GCDAsyncUdpSocket?
     private var timer: Timer?
     private var completion: SocketResponseCompletion?
     private let processingQueue = DispatchQueue(label: "com.game-server-query-library.processing-queue")
@@ -59,22 +54,21 @@ class AsyncSocketWrapper: NSObject {
     }
     
     private func sendRequest(ip: String, port: UInt16, requestMarker: [UInt8], responseMarker: [UInt8], eotMarker: [UInt8]?, completion: SocketResponseCompletion?) {
-        self.reset()
         self.completion = completion
         self.responseMarker = responseMarker
         self.eotMarker = eotMarker
         
         timer = Timer.scheduledTimer(timeInterval: timeout, target: self, selector: #selector(self.didNotReceiveResponseInTime), userInfo: nil, repeats: false)
         let data = Data(requestMarker)
-        socket.send(data, toHost: ip, port: port, withTimeout: timeout, tag: 42)
+        socket = newSocket()
+        socket?.send(data, toHost: ip, port: port, withTimeout: timeout, tag: 42)
     }
     
     func reset() {
         stopTimer()
         startingTime = 0
-        data = Data()
         completion = nil
-        socket.close()
+        socket?.close()
     }
     
     @objc private func didNotReceiveResponseInTime(_ timer: Timer) {
@@ -86,6 +80,13 @@ class AsyncSocketWrapper: NSObject {
         timer?.invalidate()
         timer = nil
     }
+    
+    private func newSocket() -> GCDAsyncUdpSocket {
+        let socket = GCDAsyncUdpSocket(delegate: self, delegateQueue: processingQueue, socketQueue: processingQueue)
+        socket.setMaxReceiveIPv4BufferSize(8_192)
+        socket.setMaxReceiveIPv6BufferSize(8_192)
+        return socket
+    }
 }
 
 extension AsyncSocketWrapper: GCDAsyncUdpSocketDelegate {
@@ -94,9 +95,9 @@ extension AsyncSocketWrapper: GCDAsyncUdpSocketDelegate {
         data = Data()
         do {
             if eotMarker != nil {
-                try self.socket.beginReceiving()
+                try self.socket?.beginReceiving()
             } else {
-                try self.socket.receiveOnce()
+                try self.socket?.receiveOnce()
             }
         } catch {
             completion?(nil, error)
