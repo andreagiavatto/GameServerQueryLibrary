@@ -52,12 +52,7 @@ actor Q3Server {
             return server
         }
         self.server.rules = serverStatus.rules
-        self.server.players = serverStatus.players.sorted { (first, second) -> Bool in
-            guard let firstScore = Int(first.score), let secondScore = Int(second.score) else {
-                return false
-            }
-            return firstScore > secondScore
-        }
+        self.server.players = serverStatus.players
         server.update(currentPlayers: String(serverStatus.players.count), ping: "\(response.runningTime)")
         return server
     }
