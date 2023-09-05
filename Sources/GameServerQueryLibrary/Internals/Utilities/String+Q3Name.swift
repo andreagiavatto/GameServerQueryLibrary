@@ -25,7 +25,7 @@ public extension String {
             let regex3 = try NSRegularExpression(pattern: "\\^+[a-z]", options: .caseInsensitive)
             decodedString = regex3.stringByReplacingMatches(in: decodedString, options: [], range: NSMakeRange(0, decodedString.count), withTemplate: "") // removes blinks and such
         } catch (let error) {
-            print(error)
+            NLog.error(error)
         }
         return decodedString
     }

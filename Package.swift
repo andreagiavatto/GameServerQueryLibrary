@@ -18,21 +18,19 @@ let package = Package(
             targets: ["GameServerQueryLibrary"]),
     ],
     dependencies: [
-        // Dependencies declare other packages that this package depends on.
-        .package(url: "https://github.com/robbiehanson/CocoaAsyncSocket", from: "7.6.4"),
-        .package(url: "https://github.com/apple/swift-async-algorithms", from: "0.0.4")
+        .package(url: "https://github.com/apple/swift-async-algorithms.git", from: "0.1.0")
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages which this package depends on.
         .target(
             name: "GameServerQueryLibrary",
-            dependencies: ["CocoaAsyncSocket", .product(name: "AsyncAlgorithms", package: "swift-async-algorithms")],
+            dependencies: [.product(name: "AsyncAlgorithms", package: "swift-async-algorithms")],
             path: "Sources"
         ),
         .testTarget(
             name: "GameServerQueryLibraryTests",
-            dependencies: ["GameServerQueryLibrary", "CocoaAsyncSocket"],
+            dependencies: ["GameServerQueryLibrary"],
             path: "Tests"
         ),
     ]

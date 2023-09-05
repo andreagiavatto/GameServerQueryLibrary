@@ -9,7 +9,6 @@
 import Foundation
 
 public final class Server: Identifiable {
-    
     public private(set) var ping: String = ""
     public private(set) var pingInt: Int = 0
     public private(set) var ip: String
@@ -84,6 +83,12 @@ public final class Server: Identifiable {
         self.inGamePlayers = "\(self.currentPlayers) / \(self.maxPlayers)"
     }
     
+}
+
+extension Server: CustomStringConvertible {
+    public var description: String {
+        "\(name) -- \(hostname)"
+    }
 }
 
 public final class Setting: Identifiable {

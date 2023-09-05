@@ -18,39 +18,45 @@ enum Q3Error: Error {
 
 class Q3Coordinator: Coordinator {
     private(set) var servers = CurrentValueSubject<[Server], Never>([])
-    private let q3master = Q3Master()
-    private var q3InfoServer: Q3Server?
-    private var q3StatusServer: Q3Server?
     private var fetchingServersTask: Task<Void, Never>?
     
     public func getServersList(ip: String, port: String) async {
         do {
-            let servers = try await q3master.getServers(ip: ip, port: port)
+            guard let q3master = Q3Master(host: ip, port: port) else {
+                return
+            }
+            let servers = try await q3master.getServers()
+            NLog.log("Fetched \(servers.count) servers")
             await fetchServersInfo(for: servers)
         } catch {
-            print(">>> MASTER \(error)")
+            NLog.log(error)
         }
     }
     
     public func fetchServersInfo(for servers: [Server]) async {
         reset()
-        print(">>> Fetched \(servers.count) servers from master server")
         guard !servers.isEmpty else {
             return
         }
-        
+                
         fetchingServersTask = Task {
-            await withTaskGroup(of: Server?.self, body: { group in
-                for server in servers {
-                    try? await Task.sleep(for: .milliseconds(100))
+            guard !Task.isCancelled else {
+                return
+            }
+            await withTaskGroup(of: Server?.self, body: { [weak self] group in
+                guard let self, !Task.isCancelled else {
+                    return
+                }
+                for enumeration in servers.enumerated() {
+                    try? await Task.sleep(for: .milliseconds(200))
                     group.addTask {
-                        let q3Server = Q3Server(server: server)
-                        let infoServer = try? await q3Server.updateInfo()
-                        if infoServer != nil, let updatedServer = try? await q3Server.updateStatus() {
-                            self.servers.value.append(updatedServer)
-                            return updatedServer
+                        guard !Task.isCancelled else {
+                            return nil
                         }
-                        return nil
+                        let infoServer = await self.updateServerInfo(enumeration.element)
+                        let statusServer = await self.updateServerStatus(infoServer)
+                        self.servers.value.append(statusServer)
+                        return statusServer
                     }
                 }
             })
@@ -58,31 +64,33 @@ class Q3Coordinator: Coordinator {
     }
 
     func updateServerInfo(_ server: Server) async -> Server {
-        let q3Server = Q3Server(server: server)
-        q3InfoServer = q3Server
+        guard let q3InfoServer = Q3InfoServer(host: server.ip, port: server.port) else {
+            return server
+        }
         do {
-            return try await q3Server.updateInfo()
+            NLog.log("INFO: \(server.hostname)")
+            return try await q3InfoServer.updateInfo(server: server)
         } catch {
-            print(">>> INFO \(error)")
+            NLog.log(error)
         }
         return server
     }
     
     func updateServerStatus(_ server: Server) async -> Server {
-        let q3Server = Q3Server(server: server)
-        q3StatusServer = q3Server
+        guard let q3StatusServer = Q3StatusServer(host: server.ip, port: server.port) else {
+            return server
+        }
         do {
-            return try await q3Server.updateStatus()
+            NLog.log("STATUS: \(server.hostname)")
+            return try await q3StatusServer.updateStatus(server: server)
         } catch {
-            print(">>> STATUS \(error)")
+            NLog.log(error)
         }
         return server
     }
     
     private func reset() {
         fetchingServersTask?.cancel()
-        q3InfoServer = nil
-        q3StatusServer = nil
         servers.value.removeAll()
     }
 }

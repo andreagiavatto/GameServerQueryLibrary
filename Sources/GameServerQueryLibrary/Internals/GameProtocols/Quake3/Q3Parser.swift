@@ -9,19 +9,35 @@
 import Foundation
 
 class Q3Parser: Parsable {
+    private static let getServersResponseMarker: [UInt8] = [0xff, 0xff, 0xff, 0xff, 0x67, 0x65, 0x74, 0x73, 0x65, 0x72, 0x76, 0x65, 0x72, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x5c] // YYYYgetserversResponse\
+    private static let eotMarker: [UInt8] = [0x5c, 0x45, 0x4f, 0x54] // \EOT
+    private static let infoResponseMarker: [UInt8] = [0xff, 0xff, 0xff, 0xff, 0x69, 0x6e, 0x66, 0x6f, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x0a, 0x5c] // YYYYinfoResponse\n\
+    private static let statusResponseMarker: [UInt8] = [0xff, 0xff, 0xff, 0xff, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x0a, 0x5c] // YYYYstatusResponse\n\
     
     static func parseServers(_ data: Data) -> [String] {
+        var actualData = data
+        guard var asciiRep = String(data: data, encoding: .ascii) else {
+            return []
+        }
+        if let prefix = String(bytes: getServersResponseMarker, encoding: .ascii), asciiRep.starts(with: prefix) {
+            let actualDataStart = actualData.index(actualData.startIndex, offsetBy: getServersResponseMarker.count)
+            actualData = actualData.subdata(in: actualDataStart..<actualData.endIndex)
+        }
+        if let suffix = String(bytes: eotMarker, encoding: .ascii), let endRange = asciiRep.range(of: suffix, options: .backwards, range: nil, locale: nil) {
+            let actualDataEnd = actualData.index(actualData.endIndex, offsetBy: -(eotMarker.count+3))
+            actualData = actualData.subdata(in: actualData.startIndex..<actualDataEnd)
+        }
+        
+        if actualData.count > 0 {
 
-        if data.count > 0 {
-
-            let len: Int = data.count
+            let len: Int = actualData.count
             var servers = [String]()
             for i in 0..<len {
                 if i > 0 && i % 7 == 0 {
                     // -- 4 bytes for ip, 2 for port, 1 separator
-                    let s = data.index(data.startIndex, offsetBy: i-7)
-                    let e = data.index(s, offsetBy: 7)
-                    let server = parseServerData(data.subdata(in: s..<e))
+                    let s = actualData.index(actualData.startIndex, offsetBy: i-7)
+                    let e = actualData.index(s, offsetBy: 7)
+                    let server = parseServerData(actualData.subdata(in: s..<e))
                     servers.append(server)
                 }
             }
@@ -40,18 +56,26 @@ class Q3Parser: Parsable {
         
         var infoResponse = String(data: data, encoding: .ascii)
         infoResponse = infoResponse?.trimmingCharacters(in: .whitespacesAndNewlines)
-        var info = infoResponse?.components(separatedBy: "\\")
-        info = info?.filter { NSPredicate(format: "SELF != ''").evaluate(with: $0) }
+        
+        guard var infoResponse else {
+            return nil
+        }
+        
+        if let prefix = String(bytes: infoResponseMarker, encoding: .ascii), infoResponse.starts(with: prefix) {
+            let actualDataStart = infoResponse.index(infoResponse.startIndex, offsetBy: prefix.count)
+            infoResponse = infoResponse.substring(from: actualDataStart)
+        }
+        
+        var info = infoResponse.components(separatedBy: "\\")
+        info = info.filter { NSPredicate(format: "SELF != ''").evaluate(with: $0) }
         var keys = [String]()
         var values = [String]()
         
-        if let info = info {
-            for (index, element) in info.enumerated() {
-                if index % 2 == 0 {
-                    keys.append(element)
-                } else {
-                    values.append(element)
-                }
+        for (index, element) in info.enumerated() {
+            if index % 2 == 0 {
+                keys.append(element)
+            } else {
+                values.append(element)
             }
         }
         
@@ -79,31 +103,40 @@ class Q3Parser: Parsable {
         
         var statusResponse = String(data: data, encoding: .ascii)
         statusResponse = statusResponse?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-        if let statusComponents = statusResponse?.components(separatedBy: "\n") {
-            let serverStatus = statusComponents[0]
-            if statusComponents.count > 1 {
-                // -- We got players
-                let playerStrings = statusComponents[1..<statusComponents.count]
-                let playersStatus = Array(playerStrings)
-                players = parsePlayersStatus(playersStatus)
+        
+        guard var statusResponse else {
+            return nil
+        }
+        
+        if let prefix = String(bytes: statusResponseMarker, encoding: .ascii), statusResponse.starts(with: prefix) {
+            let actualDataStart = statusResponse.index(statusResponse.startIndex, offsetBy: prefix.count)
+            statusResponse = statusResponse.substring(from: actualDataStart)
+        }
+        
+        let statusComponents = statusResponse.components(separatedBy: "\n")
+        let serverStatus = statusComponents[0]
+        if statusComponents.count > 1 {
+            // -- We got players
+            let playerStrings = statusComponents[1..<statusComponents.count]
+            let playersStatus = Array(playerStrings)
+            players = parsePlayersStatus(playersStatus)
+        }
+        var status = serverStatus.components(separatedBy: "\\")
+        status = status.filter { NSPredicate(format: "SELF != ''").evaluate(with: $0) }
+        var keys = [String]()
+        var values = [String]()
+        
+        for (index, element) in status.enumerated() {
+            if index % 2 == 0 {
+                keys.append(element)
+            } else {
+                values.append(element)
             }
-            var status = serverStatus.components(separatedBy: "\\")
-            status = status.filter { NSPredicate(format: "SELF != ''").evaluate(with: $0) }
-            var keys = [String]()
-            var values = [String]()
-            
-            for (index, element) in status.enumerated() {
-                if index % 2 == 0 {
-                    keys.append(element)
-                } else {
-                    values.append(element)
-                }
-            }
-            
-            if keys.count == values.count {
-                keys.enumerated().forEach { (i) -> () in
-                    rules.append(Setting(key: i.element, value: values[i.offset]))
-                }
+        }
+        
+        if keys.count == values.count {
+            keys.enumerated().forEach { (i) -> () in
+                rules.append(Setting(key: i.element, value: values[i.offset]))
             }
         }
         

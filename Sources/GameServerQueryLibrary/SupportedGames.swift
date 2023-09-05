@@ -38,7 +38,8 @@ public enum SupportedGames: CaseIterable {
                     MasterServer(hostname: "master.maverickservers.com", port:"27950"),
                     MasterServer(hostname: "dpmaster.deathmask.net", port:"27950"),
                     MasterServer(hostname: "master.huxxer.de", port:"27950"),
-                    MasterServer(hostname: "master.fpsclasico.de", port:"27950"),]
+                    MasterServer(hostname: "master.fpsclasico.de", port:"27950"),
+                    MasterServer(hostname: "master.quake3arena.com", port:"27950"),]
         case .urbanTerror:
             return [MasterServer(hostname: "master.urbanterror.info", port: "27900"),
                     MasterServer(hostname: "master2.urbanterror.info", port: "27900")]
