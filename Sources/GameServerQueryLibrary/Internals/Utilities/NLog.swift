@@ -4,7 +4,7 @@ import Foundation
 import os
 
 public final class NLog {
-	private static let subsystem = "com.napster.logging"
+	private static let subsystem = "com.gsql.logging"
 	private static let defaultLogger = Logger(subsystem: subsystem, category: "default")
 	private static var loggers = [String: Logger]()
 

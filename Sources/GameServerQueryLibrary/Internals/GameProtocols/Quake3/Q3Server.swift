@@ -28,6 +28,7 @@ final class Q3InfoServer {
         socketWrapper = SocketWrapper(requestMarker: infoRequestMarker, host: host, port: port)
     }
     
+    @discardableResult
     func updateInfo(server: Server) async throws -> Server {
         return try await withCheckedThrowingContinuation { [weak self] continuation in
             self?.socketWrapper.sendRequest { result in
@@ -61,6 +62,7 @@ final class Q3StatusServer {
         socketWrapper = SocketWrapper(requestMarker: statusRequestMarker, host: host, port: port)
     }
     
+    @discardableResult
     func updateStatus(server: Server) async throws -> Server {
         return try await withCheckedThrowingContinuation { continuation in
             socketWrapper.sendRequest { result in

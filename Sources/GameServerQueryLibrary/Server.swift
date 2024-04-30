@@ -87,7 +87,7 @@ public final class Server: Identifiable {
 
 extension Server: CustomStringConvertible {
     public var description: String {
-        "\(name) -- \(hostname)"
+        "\(name) -- \(hostname) -- \(inGamePlayers) -- \(map)"
     }
 }
 

@@ -8,6 +8,7 @@
 import Foundation
 
 enum SocketError: Error {
+    case notReady
     case timeout(String, UInt16)
     case dataNotSent(Error?)
     case closed(Error?)
