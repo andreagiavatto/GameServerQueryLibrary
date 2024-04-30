@@ -16,14 +16,14 @@ class Q3Parser: Parsable {
     
     static func parseServers(_ data: Data) -> [String] {
         var actualData = data
-        guard var asciiRep = String(data: data, encoding: .ascii) else {
+        guard let asciiRep = String(data: data, encoding: .ascii) else {
             return []
         }
         if let prefix = String(bytes: getServersResponseMarker, encoding: .ascii), asciiRep.starts(with: prefix) {
             let actualDataStart = actualData.index(actualData.startIndex, offsetBy: getServersResponseMarker.count)
             actualData = actualData.subdata(in: actualDataStart..<actualData.endIndex)
         }
-        if let suffix = String(bytes: eotMarker, encoding: .ascii), let endRange = asciiRep.range(of: suffix, options: .backwards, range: nil, locale: nil) {
+        if let suffix = String(bytes: eotMarker, encoding: .ascii), asciiRep.range(of: suffix, options: .backwards, range: nil, locale: nil) != nil {
             let actualDataEnd = actualData.index(actualData.endIndex, offsetBy: -(eotMarker.count+3))
             actualData = actualData.subdata(in: actualData.startIndex..<actualDataEnd)
         }
