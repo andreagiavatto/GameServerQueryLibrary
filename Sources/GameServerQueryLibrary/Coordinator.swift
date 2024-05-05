@@ -9,10 +9,8 @@ import Combine
 import Foundation
 
 public protocol Coordinator {
-    var servers: CurrentValueSubject<[Server], Never> { get }
-    
-    func getServersList(ip: String, port: String) async
-    func fetchServersInfo(for servers: [Server]) async
-    func updateServerInfo(_ server: Server) async -> Server
-    func updateServerStatus(_ server: Server) async -> Server
+    func getServersList(ip: String, port: String) async throws -> [Server]
+    func fetchServersInfo(for servers: [Server], waitTimeInMilliseconds: TimeInterval) -> AsyncStream<Server>
+    func updateServerInfo(_ server: Server) async throws -> Server
+    func updateServerStatus(_ server: Server) async throws -> Server
 }

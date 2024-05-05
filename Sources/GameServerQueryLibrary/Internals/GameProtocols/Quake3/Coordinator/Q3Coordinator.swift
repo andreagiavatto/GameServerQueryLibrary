@@ -16,81 +16,67 @@ enum Q3Error: Error {
     case status(Error)
 }
 
-class Q3Coordinator: Coordinator {
-    private(set) var servers = CurrentValueSubject<[Server], Never>([])
+public class Q3Coordinator: Coordinator {
     private var fetchingServersTask: Task<Void, Never>?
     
-    public func getServersList(ip: String, port: String) async {
+    public func getServersList(ip: String, port: String) async throws -> [Server] {
         do {
             guard let q3master = Q3Master(host: ip, port: port) else {
-                return
+                return []
             }
-            let servers = try await q3master.getServers()
-            NLog.log("Fetched \(servers.count) servers")
-            await fetchServersInfo(for: servers)
+            return try await q3master.getServers()
         } catch {
             NLog.log(error)
+            throw error
         }
     }
     
-    public func fetchServersInfo(for servers: [Server]) async {
-        reset()
-        guard !servers.isEmpty else {
-            return
-        }
-                
-        fetchingServersTask = Task {
-            guard !Task.isCancelled else {
-                return
-            }
-            await withTaskGroup(of: Server?.self, body: { [weak self] group in
-                guard let self, !Task.isCancelled else {
-                    return
-                }
-                for enumeration in servers.enumerated() {
-                    try? await Task.sleep(for: .milliseconds(200))
-                    group.addTask {
-                        guard !Task.isCancelled else {
-                            return nil
+    public func fetchServersInfo(for servers: [Server], waitTimeInMilliseconds: TimeInterval = 100) -> AsyncStream<Server> {
+        return AsyncStream { continuation in
+            fetchingServersTask = Task { [weak self] in
+                for server in servers {
+                    guard !Task.isCancelled else {
+                        continuation.finish()
+                        return
+                    }
+                    do {
+                        if let updatedServer = try await self?.updateServerInfo(server) {
+                            continuation.yield(updatedServer)
                         }
-                        let infoServer = await self.updateServerInfo(enumeration.element)
-                        let statusServer = await self.updateServerStatus(infoServer)
-                        self.servers.value.append(statusServer)
-                        return statusServer
+                    } catch {
+                        NLog.error(error)
                     }
                 }
-            })
+                continuation.finish()
+            }
         }
     }
 
-    func updateServerInfo(_ server: Server) async -> Server {
+    public func updateServerInfo(_ server: Server) async throws -> Server {
         guard let q3InfoServer = Q3InfoServer(host: server.ip, port: server.port) else {
             return server
         }
         do {
-            NLog.log("INFO: \(server.hostname)")
             return try await q3InfoServer.updateInfo(server: server)
         } catch {
-            NLog.log(error)
+            NLog.error(error)
+            throw error
         }
-        return server
     }
     
-    func updateServerStatus(_ server: Server) async -> Server {
+    public func updateServerStatus(_ server: Server) async throws -> Server {
         guard let q3StatusServer = Q3StatusServer(host: server.ip, port: server.port) else {
             return server
         }
         do {
-            NLog.log("STATUS: \(server.hostname)")
             return try await q3StatusServer.updateStatus(server: server)
         } catch {
-            NLog.log(error)
+            NLog.error(error)
+            throw error
         }
-        return server
     }
     
     private func reset() {
         fetchingServersTask?.cancel()
-        servers.value.removeAll()
     }
 }

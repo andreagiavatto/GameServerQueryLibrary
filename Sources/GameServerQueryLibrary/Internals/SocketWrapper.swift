@@ -64,6 +64,15 @@ public final class SocketWrapper {
         }
     }
     
+    func startTimer() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self else {
+                return
+            }
+            self.timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(self.didNotReceiveResponseInTime), userInfo: nil, repeats: false)
+        }
+    }
+    
     func cancel() {
         cleanup()
     }
@@ -77,7 +86,7 @@ public final class SocketWrapper {
             }
         })))
         
-        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.didNotReceiveResponseInTime), userInfo: nil, repeats: false)
+        startTimer()
         
         listenForDatagrams()
     }
@@ -109,19 +118,23 @@ public final class SocketWrapper {
     }
     
     @objc private func didNotReceiveResponseInTime(_ timer: Timer) {
-        NLog.error("TIMEOUT >> \(host):\(port)")
         completionHandler?(.failure(SocketError.timeout(host.debugDescription, port.rawValue)))
         cleanup()
     }
     
     private func invalidateTimer() {
-        self.timer?.invalidate()
-        self.timer = nil
+        DispatchQueue.main.async { [weak self] in
+            guard let self else {
+                return
+            }
+            self.timer?.invalidate()
+            self.timer = nil
+        }
     }
     
     private func cleanup() {
-        completionHandler = nil
         invalidateTimer()
+        completionHandler = nil
         connection.cancel()
     }
 }
