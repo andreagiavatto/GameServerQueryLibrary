@@ -73,16 +73,16 @@ public final class Server: Identifiable {
         self.name = originalName.q3ColorDecoded
     }
     
-    func update(currentPlayers: String, ping: String) {
+    func update(currentPlayers: String, map: String?, ping: String) {
         guard ping.count > 0 else {
             return
         }
         self.ping = ping
         self.pingInt = Int(ping) ?? 0
+        self.map = map ?? self.map
         self.currentPlayers = currentPlayers
         self.inGamePlayers = "\(self.currentPlayers) / \(self.maxPlayers)"
     }
-    
 }
 
 extension Server: CustomStringConvertible {

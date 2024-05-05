@@ -74,7 +74,7 @@ final class Q3StatusServer {
                     }
                     server.rules = serverStatus.rules
                     server.players = serverStatus.players
-                    server.update(currentPlayers: String(serverStatus.players.count), ping: "\(response.runningTime)")
+                    server.update(currentPlayers: String(serverStatus.players.count), map: serverStatus.rules.first(where: { $0.key == "mapname" })?.value, ping: "\(response.runningTime)")
                     continuation.resume(returning: server)
                 case .failure(let error):
                     continuation.resume(throwing: error)

@@ -52,11 +52,11 @@ public extension Server {
             return nil
         }
         var redPlayers = [Player]()
-        guard let playersInRedTeam = redPlayersInRules?.components(separatedBy: " ") else {
-            return Team(type: .red, score: "--", players: redPlayers)
-        }
         guard let scoreRedTeam = teamRedScoreInRules else {
             return Team(type: .red, score: "--", players: redPlayers)
+        }
+        guard let playersInRedTeam = redPlayersInRules?.components(separatedBy: " ") else {
+            return Team(type: .red, score: scoreRedTeam, players: redPlayers)
         }
         playersInRedTeam.forEach { position in
             if let index = Int(position), index - 1 < players.count, index - 1 >= 0 {
@@ -74,11 +74,11 @@ public extension Server {
             return nil
         }
         var bluePlayers = [Player]()
-        guard let playersInBlueTeam = bluePlayersInRules?.components(separatedBy: " ") else {
-            return Team(type: .blue, score: "--", players: bluePlayers)
-        }
         guard let scoreBlueTeam = teamBlueScoreInRules else {
             return Team(type: .blue, score: "--", players: bluePlayers)
+        }
+        guard let playersInBlueTeam = bluePlayersInRules?.components(separatedBy: " ") else {
+            return Team(type: .blue, score: scoreBlueTeam, players: bluePlayers)
         }
         playersInBlueTeam.forEach { position in
             if let index = Int(position), index - 1 < players.count, index - 1 >= 0 {
