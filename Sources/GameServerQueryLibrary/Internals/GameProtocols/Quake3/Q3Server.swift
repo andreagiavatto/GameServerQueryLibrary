@@ -38,8 +38,9 @@ final class Q3InfoServer {
                         continuation.resume(returning: server)
                         return
                     }
-                    server.update(with: serverInfo)
-                    continuation.resume(returning: server)
+                    var updatedServer = server
+                    updatedServer.update(with: serverInfo)
+                    continuation.resume(returning: updatedServer)
                 case .failure(let error):
                     continuation.resume(throwing: error)
                 }
@@ -72,10 +73,11 @@ final class Q3StatusServer {
                         continuation.resume(returning: server)
                         return
                     }
-                    server.rules = serverStatus.rules
-                    server.players = serverStatus.players
-                    server.update(currentPlayers: String(serverStatus.players.count), map: serverStatus.rules.first(where: { $0.key == "mapname" })?.value, ping: "\(response.runningTime)")
-                    continuation.resume(returning: server)
+                    var updatedServer = server
+                    updatedServer.rules = serverStatus.rules
+                    updatedServer.players = serverStatus.players
+                    updatedServer.update(currentPlayers: String(serverStatus.players.count), map: serverStatus.rules.first(where: { $0.key == "mapname" })?.value, ping: "\(response.runningTime)")
+                    continuation.resume(returning: updatedServer)
                 case .failure(let error):
                     continuation.resume(throwing: error)
                 }

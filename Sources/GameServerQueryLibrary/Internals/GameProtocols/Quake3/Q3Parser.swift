@@ -63,7 +63,7 @@ class Q3Parser: Parsable {
         
         if let prefix = String(bytes: infoResponseMarker, encoding: .ascii), infoResponse.starts(with: prefix) {
             let actualDataStart = infoResponse.index(infoResponse.startIndex, offsetBy: prefix.count)
-            infoResponse = infoResponse.substring(from: actualDataStart)
+            infoResponse = String(infoResponse[actualDataStart...])// infoResponse.substring(from: actualDataStart)
         }
         
         var info = infoResponse.components(separatedBy: "\\")
@@ -110,7 +110,7 @@ class Q3Parser: Parsable {
         
         if let prefix = String(bytes: statusResponseMarker, encoding: .ascii), statusResponse.starts(with: prefix) {
             let actualDataStart = statusResponse.index(statusResponse.startIndex, offsetBy: prefix.count)
-            statusResponse = statusResponse.substring(from: actualDataStart)
+            statusResponse = String(statusResponse[actualDataStart...]) //statusResponse.substring(from: actualDataStart)
         }
         
         let statusComponents = statusResponse.components(separatedBy: "\n")

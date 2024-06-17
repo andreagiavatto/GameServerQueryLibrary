@@ -8,19 +8,20 @@
 import Foundation
 import Network
 
-typealias SocketResponseCompletion = (Result<SocketResponse, Error>) -> Void
+typealias SocketResponseCompletion = @Sendable (Result<SocketResponse, Error>) -> Void
 
-public final class SocketWrapper {
+public final class SocketWrapper: Sendable {
     private let requestMarker: [UInt8]
     private let host: NWEndpoint.Host
     private let port: NWEndpoint.Port
-    private var connection: NWConnection
-    private var sendRequestInitiated = false
-    private var data = Data()
-    private var startingTime: TimeInterval = 0
-    private var timer: Timer?
+    private let connection: NWConnection
+    private nonisolated(unsafe) var sendRequestInitiated = false
+    private nonisolated(unsafe) var data = Data()
+    private nonisolated(unsafe) var startingTime: TimeInterval = 0
+    private nonisolated(unsafe) var timer: Timer?
     private let queue = DispatchQueue(label: "com.gameServerQueryLibrary.socketQueue")
-    private var completionHandler: SocketResponseCompletion?
+    private nonisolated(unsafe) var completionHandler: SocketResponseCompletion?
+    private let dispatchQueue = DispatchQueue(label: "com.gsql.socket-queue")
 
     deinit {
         cleanup()
@@ -37,30 +38,37 @@ public final class SocketWrapper {
     
     private func observeConnectionStateUpdates() {
         connection.stateUpdateHandler = { [weak self] (newState) in
-            guard let self else {
-                return
-            }
-            switch (newState) {
-            case .ready:
-                if sendRequestInitiated {
-                    let data = Data(requestMarker)
-                    sendRequest(data)
+            self?.dispatchQueue.async { [weak self] in
+                guard let self else {
+                    return
                 }
-            case .failed(let error):
-                self.completionHandler?(.failure(error))
-            default:
-                break
+                switch (newState) {
+                case .ready:
+                    if sendRequestInitiated {
+                        let data = Data(requestMarker)
+                        sendRequest(data)
+                    }
+                case .failed(let error):
+                    self.completionHandler?(.failure(error))
+                default:
+                    break
+                }
             }
         }
     }
     
     func sendRequest(_ completionHandler: @escaping SocketResponseCompletion) {
-        sendRequestInitiated = true
-        self.completionHandler = completionHandler
-        
-        if connection.state == .ready {
-            let data = Data(requestMarker)
-            sendRequest(data)
+        dispatchQueue.async { [weak self] in
+            guard let self else {
+                return
+            }
+            sendRequestInitiated = true
+            self.completionHandler = completionHandler
+            
+            if connection.state == .ready {
+                let data = Data(requestMarker)
+                sendRequest(data)
+            }
         }
     }
     
@@ -79,10 +87,12 @@ public final class SocketWrapper {
 
     private func sendRequest(_ content: Data) {
         connection.send(content: content, completion: NWConnection.SendCompletion.contentProcessed(({ [weak self] error in
-            if let error {
-                self?.completionHandler?(.failure(error))
-            } else {
-                self?.startingTime = Date.timeIntervalSinceReferenceDate
+            self?.dispatchQueue.async { [weak self] in
+                if let error {
+                    self?.completionHandler?(.failure(error))
+                } else {
+                    self?.startingTime = Date.timeIntervalSinceReferenceDate
+                }
             }
         })))
         
@@ -93,33 +103,40 @@ public final class SocketWrapper {
 
     private func listenForDatagrams() {
         connection.receive(minimumIncompleteLength: 1, maximumLength: 8_192) { [weak self] (data, context, isComplete, error) in
-            guard let self else {
-                return
-            }
-            if isComplete {
-                self.invalidateTimer()
-                if let data {
-                    self.data.append(data)
+            self?.dispatchQueue.async { [weak self] in
+                guard let self else {
+                    return
                 }
-                let runningTime = ((Date.timeIntervalSinceReferenceDate - self.startingTime) * 1000).rounded()
-                let response = SocketResponse(data: self.data, runningTime: Int(runningTime))
-                self.completionHandler?(.success(response))
-                return
-            }
-            if let error {
-                NLog.log(error)
-                self.completionHandler?(.failure(error))
-                return
-            } else if let data {
-                self.data.append(data)
-                self.listenForDatagrams()
+                if isComplete {
+                    self.invalidateTimer()
+                    if let data {
+                        self.data.append(data)
+                    }
+                    let runningTime = ((Date.timeIntervalSinceReferenceDate - self.startingTime) * 1000).rounded()
+                    let response = SocketResponse(data: self.data, runningTime: Int(runningTime))
+                    self.completionHandler?(.success(response))
+                    return
+                }
+                if let error {
+                    NLog.error(error)
+                    self.completionHandler?(.failure(error))
+                    return
+                } else if let data {
+                    self.data.append(data)
+                    self.listenForDatagrams()
+                }
             }
         }
     }
     
     @objc private func didNotReceiveResponseInTime(_ timer: Timer) {
-        completionHandler?(.failure(SocketError.timeout(host.debugDescription, port.rawValue)))
-        cleanup()
+        dispatchQueue.async { [weak self] in
+            guard let self else {
+                return
+            }
+            completionHandler?(.failure(SocketError.timeout(host.debugDescription, port.rawValue)))
+            cleanup()
+        }
     }
     
     private func invalidateTimer() {
@@ -133,8 +150,13 @@ public final class SocketWrapper {
     }
     
     private func cleanup() {
-        invalidateTimer()
-        completionHandler = nil
-        connection.cancel()
+        dispatchQueue.async { [weak self] in
+            guard let self else {
+                return
+            }
+            invalidateTimer()
+            completionHandler = nil
+            connection.cancel()
+        }
     }
 }

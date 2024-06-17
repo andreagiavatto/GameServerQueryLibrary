@@ -8,13 +8,13 @@
 
 import Foundation
 
-public final class Player: Identifiable {
-    
+public struct Player: Identifiable, Sendable {
+    public var id: String { name }
     public let name: String
     public let ping: String
     public let score: String
 
-    public required init?(line: String) {
+    public init?(line: String) {
         guard !line.isEmpty else {
             return nil
         }
@@ -38,7 +38,6 @@ public final class Player: Identifiable {
 }
 
 extension Player: CustomStringConvertible {
-    
     public var description: String {
         return "<Player> \(name) (\(ping)) - \(score)"
     }

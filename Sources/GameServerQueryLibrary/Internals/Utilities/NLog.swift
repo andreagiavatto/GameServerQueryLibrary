@@ -6,7 +6,7 @@ import os
 public final class NLog {
 	private static let subsystem = "com.gsql.logging"
 	private static let defaultLogger = Logger(subsystem: subsystem, category: "default")
-	private static var loggers = [String: Logger]()
+	private static let loggers = [String: Logger]()
 
 	private init() {}
 
@@ -44,11 +44,11 @@ public final class NLog {
 	}
 }
 
-public struct BuildDestination: OptionSet {
+public struct BuildDestination: OptionSet, Sendable {
     public let rawValue: Int
 
     static let dev = BuildDestination(rawValue: 1 << 0)
-    static let release = BuildDestination(rawValue: 1 << 2)
+    static let release = BuildDestination(rawValue: 1 << 1)
 
     static let allTestingModes: BuildDestination = [.dev]
 

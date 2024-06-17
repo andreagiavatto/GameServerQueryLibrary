@@ -8,11 +8,12 @@
 
 import Foundation
 
-public final class Server: Identifiable {
+public struct Server: Identifiable, Sendable {
+    public var id: String { hostname }
     public private(set) var ping: String = ""
     public private(set) var pingInt: Int = 0
-    public private(set) var ip: String
-    public private(set) var port: String
+    public let ip: String
+    public let port: String
     public private(set) var originalName: String = ""
     public private(set) var name: String = ""
     public private(set) var map: String = ""
@@ -23,15 +24,15 @@ public final class Server: Identifiable {
     public var rules: [Setting] = []
     public var players: [Player] = []
     public private(set) var inGamePlayers: String = "0/0"
-    public private(set) var hostname: String
+    public let hostname: String
 
-    required public init(ip: String, port: String) {
+    public init(ip: String, port: String) {
         self.ip = ip
         self.port = port
         self.hostname = "\(ip):\(port)"
     }
     
-    func update(with serverInfo: [String: String]?) {
+    mutating func update(with serverInfo: [String: String]?) {
         guard let serverInfo = serverInfo, !serverInfo.isEmpty else {
             return
         }
@@ -73,7 +74,7 @@ public final class Server: Identifiable {
         self.name = originalName.q3ColorDecoded
     }
     
-    func update(currentPlayers: String, map: String?, ping: String) {
+    mutating func update(currentPlayers: String, map: String?, ping: String) {
         guard ping.count > 0 else {
             return
         }
@@ -91,7 +92,8 @@ extension Server: CustomStringConvertible {
     }
 }
 
-public final class Setting: Identifiable {
+public struct Setting: Identifiable, Sendable {
+    public var id: String { key + value }
     public let key: String
     public let value: String
     

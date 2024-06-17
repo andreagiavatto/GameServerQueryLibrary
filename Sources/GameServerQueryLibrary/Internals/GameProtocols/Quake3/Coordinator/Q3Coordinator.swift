@@ -16,9 +16,7 @@ enum Q3Error: Error {
     case status(Error)
 }
 
-public class Q3Coordinator: Coordinator {
-    private var fetchingServersTask: Task<Void, Never>?
-    
+public final class Q3Coordinator: Coordinator, Sendable {
     public func getServersList(ip: String, port: String) async throws -> [Server] {
         do {
             guard let q3master = Q3Master(host: ip, port: port) else {
@@ -33,7 +31,7 @@ public class Q3Coordinator: Coordinator {
     
     public func fetchServersInfo(for servers: [Server], waitTimeInMilliseconds: TimeInterval = 100) -> AsyncStream<Server> {
         return AsyncStream { continuation in
-            fetchingServersTask = Task { [weak self] in
+            Task { [weak self] in
                 for server in servers {
                     guard !Task.isCancelled else {
                         continuation.finish()
@@ -74,9 +72,5 @@ public class Q3Coordinator: Coordinator {
             NLog.error(error)
             throw error
         }
-    }
-    
-    private func reset() {
-        fetchingServersTask?.cancel()
     }
 }
