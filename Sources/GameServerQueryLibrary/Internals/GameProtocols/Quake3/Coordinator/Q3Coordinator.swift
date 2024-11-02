@@ -24,7 +24,7 @@ public final class Q3Coordinator: Coordinator, Sendable {
             }
             return try await q3master.getServers()
         } catch {
-            NLog.log(error)
+            NLog.error(error)
             throw error
         }
     }
@@ -50,24 +50,8 @@ public final class Q3Coordinator: Coordinator, Sendable {
             }
             
             continuation.onTermination = { @Sendable status in
-                print("Stream terminated with status \(status)")
+                NLog.log("Stream terminated with status \(status)")
             }
-//            Task { [weak self] in
-//                for server in servers {
-//                    guard !Task.isCancelled else {
-//                        continuation.finish()
-//                        return
-//                    }
-//                    do {
-//                        if let updatedServer = try await self?.updateServerInfo(server) {
-//                            continuation.yield(updatedServer)
-//                        }
-//                    } catch {
-//                        NLog.error(error)
-//                    }
-//                }
-//                continuation.finish()
-//            }
         }
     }
 

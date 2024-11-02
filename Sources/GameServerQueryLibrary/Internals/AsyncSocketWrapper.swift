@@ -16,8 +16,8 @@ public final actor AsyncSocketWrapper: Sendable {
     private nonisolated(unsafe) var sendRequestInitiated = false
     private nonisolated(unsafe) var data = Data()
     private nonisolated(unsafe) var startingTime: TimeInterval = 0
-    private nonisolated(unsafe) var timer: Timer?
     private let queue = DispatchQueue(label: "com.gameServerQueryLibrary.socketQueue")
+    private var timeoutTask: DispatchWorkItem?
     private var continuation: CheckedContinuation<SocketResponse, Error>?
     
     private var requestInProgress = false
@@ -67,7 +67,7 @@ public final actor AsyncSocketWrapper: Sendable {
     
     private func cleanup() async {
         continuation = nil
-        await invalidateTimer()
+        invalidateTimer()
         connection.cancel()
     }
     
@@ -130,22 +130,22 @@ public final actor AsyncSocketWrapper: Sendable {
     }
     
     private func startTimer() async {
-        await MainActor.run {
-            timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(self.didNotReceiveResponseInTime), userInfo: nil, repeats: false)
-        }
+        let timeoutTask = DispatchWorkItem(block: { @Sendable in
+            Task {
+                await self.timeout()
+            }
+        })
+        self.timeoutTask = timeoutTask
+        queue.asyncAfter(deadline: .now() + 0.5, execute: timeoutTask)
     }
     
-    @objc private func didNotReceiveResponseInTime() async {
-        Task {
-            await finish(with: SocketError.timeout(host.debugDescription, port.rawValue))
-            await cleanup()
-        }
+    private func invalidateTimer() {
+        timeoutTask?.cancel()
+        timeoutTask = nil
     }
     
-    private func invalidateTimer() async {
-        await MainActor.run {
-            timer?.invalidate()
-            timer = nil
-        }
+    private func timeout() async {
+        await self.finish(with: SocketError.timeout(host.debugDescription, port.rawValue))
+        await self.cleanup()
     }
 }
