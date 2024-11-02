@@ -7,15 +7,16 @@
 
 import Foundation
 
-enum SocketError: Error {
+public enum SocketError: Error {
     case notReady
     case timeout(String, UInt16)
     case dataNotSent(Error?)
     case closed(Error?)
+    case requestAlreadyInProgress
     case unknown
 }
 
-struct SocketResponse {
-    let data: Data
-    let runningTime: Int
+public struct SocketResponse: Sendable {
+    public let data: Data
+    public let runningTime: Int
 }

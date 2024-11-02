@@ -14,38 +14,28 @@ enum Q3ServerError: Error {
 }
 
 final class Q3InfoServer {
-    
     private let infoRequestMarker: [UInt8] = [0xff, 0xff, 0xff, 0xff, 0x67, 0x65, 0x74, 0x69, 0x6e, 0x66, 0x6f, 0x0a]
     private let infoResponseMarker: [UInt8] = [0xff, 0xff, 0xff, 0xff, 0x69, 0x6e, 0x66, 0x6f, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x0a, 0x5c] // YYYYinfoResponse\n\
     
-    private let socketWrapper: SocketWrapper
+    private let socketWrapper: AsyncSocketWrapper
     
     init?(host: String, port: String) {
         let host = NWEndpoint.Host(host)
         guard let serverPort = UInt16(port), let port = NWEndpoint.Port(rawValue: serverPort) else {
             return nil
         }
-        socketWrapper = SocketWrapper(requestMarker: infoRequestMarker, host: host, port: port)
+        socketWrapper = AsyncSocketWrapper(requestMarker: infoRequestMarker, host: host, port: port)
     }
     
     @discardableResult
     func updateInfo(server: Server) async throws -> Server {
-        return try await withCheckedThrowingContinuation { [weak self] continuation in
-            self?.socketWrapper.sendRequest { result in
-                switch result {
-                case .success(let response):
-                    guard let serverInfo = Q3Parser.parseServer(response.data) else {
-                        continuation.resume(returning: server)
-                        return
-                    }
-                    var updatedServer = server
-                    updatedServer.update(with: serverInfo)
-                    continuation.resume(returning: updatedServer)
-                case .failure(let error):
-                    continuation.resume(throwing: error)
-                }
-            }
+        let response = try await socketWrapper.sendRequest()
+        guard let serverInfo = Q3Parser.parseServer(response.data) else {
+            return server
         }
+        var updatedServer = server
+        updatedServer.update(with: serverInfo)
+        return updatedServer
     }
 }
 
@@ -53,35 +43,26 @@ final class Q3StatusServer {
     private let statusRequestMarker: [UInt8] = [0xff, 0xff, 0xff, 0xff, 0x67, 0x65, 0x74, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x0a] // YYYYgetservers 68 empty full
     private let statusResponseMarker: [UInt8] = [0xff, 0xff, 0xff, 0xff, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x0a, 0x5c] // YYYYstatusResponse\n\
     
-    private let socketWrapper: SocketWrapper
+    private let socketWrapper: AsyncSocketWrapper
     
     init?(host: String, port: String) {
         let host = NWEndpoint.Host(host)
         guard let serverPort = UInt16(port), let port = NWEndpoint.Port(rawValue: serverPort) else {
             return nil
         }
-        socketWrapper = SocketWrapper(requestMarker: statusRequestMarker, host: host, port: port)
+        socketWrapper = AsyncSocketWrapper(requestMarker: statusRequestMarker, host: host, port: port)
     }
     
     @discardableResult
     func updateStatus(server: Server) async throws -> Server {
-        return try await withCheckedThrowingContinuation { continuation in
-            socketWrapper.sendRequest { result in
-                switch result {
-                case .success(let response):
-                    guard let serverStatus = Q3Parser.parseServerStatus(response.data) else {
-                        continuation.resume(returning: server)
-                        return
-                    }
-                    var updatedServer = server
-                    updatedServer.rules = serverStatus.rules
-                    updatedServer.players = serverStatus.players
-                    updatedServer.update(currentPlayers: String(serverStatus.players.count), map: serverStatus.rules.first(where: { $0.key == "mapname" })?.value, ping: "\(response.runningTime)")
-                    continuation.resume(returning: updatedServer)
-                case .failure(let error):
-                    continuation.resume(throwing: error)
-                }
-            }
+        let response = try await socketWrapper.sendRequest()
+        guard let serverStatus = Q3Parser.parseServerStatus(response.data) else {
+            return server
         }
+        var updatedServer = server
+        updatedServer.rules = serverStatus.rules
+        updatedServer.players = serverStatus.players
+        updatedServer.update(currentPlayers: String(serverStatus.players.count), map: serverStatus.rules.first(where: { $0.key == "mapname" })?.value, ping: "\(response.runningTime)")
+        return updatedServer
     }
 }

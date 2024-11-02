@@ -29,24 +29,45 @@ public final class Q3Coordinator: Coordinator, Sendable {
         }
     }
     
-    public func fetchServersInfo(for servers: [Server], waitTimeInMilliseconds: TimeInterval = 100) -> AsyncStream<Server> {
-        return AsyncStream { continuation in
-            Task { [weak self] in
-                for server in servers {
-                    guard !Task.isCancelled else {
-                        continuation.finish()
-                        return
-                    }
-                    do {
-                        if let updatedServer = try await self?.updateServerInfo(server) {
-                            continuation.yield(updatedServer)
+    public func fetchServersInfo(for servers: [Server], waitTimeInMilliseconds: TimeInterval = 100) -> AsyncThrowingStream<Server, Error> {
+        return AsyncThrowingStream { continuation in
+            Task {
+                try await withThrowingTaskGroup(of: Server.self) { taskGroup in
+                    for server in servers {
+                        if !taskGroup.isCancelled {
+                            taskGroup.addTask {
+                                return try await self.updateServerInfo(server)
+                            }
                         }
-                    } catch {
-                        NLog.error(error)
                     }
+                    
+                    for try await item in taskGroup {
+                        continuation.yield(item)
+                    }
+                    
+                    continuation.finish()
                 }
-                continuation.finish()
             }
+            
+            continuation.onTermination = { @Sendable status in
+                print("Stream terminated with status \(status)")
+            }
+//            Task { [weak self] in
+//                for server in servers {
+//                    guard !Task.isCancelled else {
+//                        continuation.finish()
+//                        return
+//                    }
+//                    do {
+//                        if let updatedServer = try await self?.updateServerInfo(server) {
+//                            continuation.yield(updatedServer)
+//                        }
+//                    } catch {
+//                        NLog.error(error)
+//                    }
+//                }
+//                continuation.finish()
+//            }
         }
     }
 
