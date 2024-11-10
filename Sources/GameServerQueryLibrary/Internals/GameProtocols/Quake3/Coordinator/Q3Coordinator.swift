@@ -16,7 +16,7 @@ enum Q3Error: Error {
     case status(Error)
 }
 
-public final class Q3Coordinator: Coordinator, Sendable {
+public final actor Q3Coordinator: Coordinator, Sendable {
     public func getServersList(ip: String, port: String) async throws -> [Server] {
         do {
             guard let q3master = Q3Master(host: ip, port: port) else {
@@ -29,7 +29,7 @@ public final class Q3Coordinator: Coordinator, Sendable {
         }
     }
     
-    public func fetchServersInfo(for servers: [Server], waitTimeInMilliseconds: TimeInterval = 100) -> AsyncThrowingStream<Server, Error> {
+    public func fetchServersInfo(for servers: [Server]) -> AsyncThrowingStream<Server, Error> {
         return AsyncThrowingStream { continuation in
             Task {
                 try await withThrowingTaskGroup(of: Server.self) { taskGroup in

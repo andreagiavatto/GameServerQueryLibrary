@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct MasterServer: CustomStringConvertible {
+public struct MasterServer: CustomStringConvertible, Sendable {
     public let hostname: String
     public let port: String
     

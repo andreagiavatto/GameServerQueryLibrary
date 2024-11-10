@@ -92,6 +92,12 @@ extension Server: CustomStringConvertible {
     }
 }
 
+extension Server: Equatable {
+    public static func == (lhs: Server, rhs: Server) -> Bool {
+        lhs.id == rhs.id
+    }
+}
+
 public struct Setting: Identifiable, Sendable {
     public var id: String { key + value }
     public let key: String

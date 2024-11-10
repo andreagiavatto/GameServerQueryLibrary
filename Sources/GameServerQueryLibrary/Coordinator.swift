@@ -8,9 +8,9 @@
 import Combine
 import Foundation
 
-public protocol Coordinator {
+public protocol Coordinator: Actor {
     func getServersList(ip: String, port: String) async throws -> [Server]
-    func fetchServersInfo(for servers: [Server], waitTimeInMilliseconds: TimeInterval) -> AsyncThrowingStream<Server, Error>
+    func fetchServersInfo(for servers: [Server]) -> AsyncThrowingStream<Server, Error>
     func updateServerInfo(_ server: Server) async throws -> Server
     func updateServerStatus(_ server: Server) async throws -> Server
 }
