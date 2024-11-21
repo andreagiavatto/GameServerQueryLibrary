@@ -108,10 +108,10 @@ public final actor AsyncSocketWrapper: Sendable {
                     return
                 }
                 if isComplete {
-                    await self.invalidateTimer()
                     if let data {
                         self.data.append(data)
                     }
+                    await self.invalidateTimer()
                     let runningTime = ((Date.timeIntervalSinceReferenceDate - self.startingTime) * 1000).rounded()
                     let response = SocketResponse(data: self.data, runningTime: Int(runningTime))
                     await finish(with: response)

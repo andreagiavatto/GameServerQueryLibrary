@@ -1,14 +1,6 @@
 {
+  "originHash" : "7446d7d9d1aed8af2fe03d621269afe168088f4eb8774f0eb6062af6ca0c1aea",
   "pins" : [
-    {
-      "identity" : "cocoaasyncsocket",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/robbiehanson/CocoaAsyncSocket",
-      "state" : {
-        "revision" : "0e00c967a010fc43ce528bd633d032f17158d393",
-        "version" : "7.6.4"
-      }
-    },
     {
       "identity" : "swift-async-algorithms",
       "kind" : "remoteSourceControl",
@@ -28,5 +20,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

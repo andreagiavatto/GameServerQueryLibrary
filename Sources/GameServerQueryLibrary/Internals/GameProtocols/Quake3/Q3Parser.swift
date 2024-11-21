@@ -16,20 +16,20 @@ class Q3Parser: Parsable {
     
     static func parseServers(_ data: Data) -> [String] {
         var actualData = data
-        guard let asciiRep = String(data: data, encoding: .ascii) else {
-            return []
-        }
-        if let prefix = String(bytes: getServersResponseMarker, encoding: .ascii), asciiRep.starts(with: prefix) {
+        let asciiRep = asciiString(from: data)
+        let prefix = asciiString(from: getServersResponseMarker)
+        if asciiRep.starts(with: prefix) {
             let actualDataStart = actualData.index(actualData.startIndex, offsetBy: getServersResponseMarker.count)
             actualData = actualData.subdata(in: actualDataStart..<actualData.endIndex)
         }
-        if let suffix = String(bytes: eotMarker, encoding: .ascii), asciiRep.range(of: suffix, options: .backwards, range: nil, locale: nil) != nil {
+        let suffix = asciiString(from: eotMarker)
+        if asciiRep.range(of: suffix, options: .backwards, range: nil, locale: nil) != nil {
             let actualDataEnd = actualData.index(actualData.endIndex, offsetBy: -(eotMarker.count+3))
             actualData = actualData.subdata(in: actualData.startIndex..<actualDataEnd)
         }
         
         if actualData.count > 0 {
-
+            
             let len: Int = actualData.count
             var servers = [String]()
             for i in 0..<len {
@@ -47,23 +47,20 @@ class Q3Parser: Parsable {
         
         return []
     }
-
+    
     static func parseServer(_ data: Data) -> [String: String]? {
         
         guard data.count > 0 else {
             return nil
         }
         
-        var infoResponse = String(data: data, encoding: .ascii)
-        infoResponse = infoResponse?.trimmingCharacters(in: .whitespacesAndNewlines)
+        var infoResponse = asciiString(from: data)
+        infoResponse = infoResponse.trimmingCharacters(in: .whitespacesAndNewlines)
         
-        guard var infoResponse else {
-            return nil
-        }
-        
-        if let prefix = String(bytes: infoResponseMarker, encoding: .ascii), infoResponse.starts(with: prefix) {
+        let prefix = asciiString(from: infoResponseMarker)
+        if infoResponse.starts(with: prefix) {
             let actualDataStart = infoResponse.index(infoResponse.startIndex, offsetBy: prefix.count)
-            infoResponse = String(infoResponse[actualDataStart...])// infoResponse.substring(from: actualDataStart)
+            infoResponse = String(infoResponse[actualDataStart...])
         }
         
         var info = infoResponse.components(separatedBy: "\\")
@@ -91,7 +88,7 @@ class Q3Parser: Parsable {
         
         return nil
     }
-
+    
     static func parseServerStatus(_ data: Data) -> (rules: [Setting], players: [Player])? {
         
         guard data.count > 0 else {
@@ -101,16 +98,13 @@ class Q3Parser: Parsable {
         var rules = [Setting]()
         var players = [Player]()
         
-        var statusResponse = String(data: data, encoding: .ascii)
-        statusResponse = statusResponse?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+        var statusResponse = asciiString(from: data)
+        statusResponse = statusResponse.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         
-        guard var statusResponse else {
-            return nil
-        }
-        
-        if let prefix = String(bytes: statusResponseMarker, encoding: .ascii), statusResponse.starts(with: prefix) {
+        let prefix = asciiString(from: statusResponseMarker)
+        if statusResponse.starts(with: prefix) {
             let actualDataStart = statusResponse.index(statusResponse.startIndex, offsetBy: prefix.count)
-            statusResponse = String(statusResponse[actualDataStart...]) //statusResponse.substring(from: actualDataStart)
+            statusResponse = String(statusResponse[actualDataStart...])
         }
         
         let statusComponents = statusResponse.components(separatedBy: "\n")
@@ -142,17 +136,17 @@ class Q3Parser: Parsable {
         
         return (rules, players)
     }
-
+    
     // MARK: - Private methods
-
+    
     private static func parseServerData(_ data: Data) -> String {
-
+        
         let len: Int = data.count
         let bytes = [UInt8](data)
         var port: UInt32 = 0
         var server = String()
         for i in 0..<len - 1 {
-
+            
             if i < 4 {
                 if i < 3 {
                     server = server.appendingFormat("%d.", bytes[i])
@@ -172,7 +166,7 @@ class Q3Parser: Parsable {
         }
         return "\(server):\(port)"
     }
-
+    
     private static func parsePlayersStatus(_ players: [String]) -> [Player] {
         
         guard players.count > 0 else {
@@ -186,7 +180,21 @@ class Q3Parser: Parsable {
                 q3Players.append(player)
             }
         }
-
+        
         return q3Players
+    }
+    
+    private static func asciiString(from data: Data) -> String {
+        return String(decoding: bytesFromData(data), as: Unicode.ASCII.self)
+    }
+    
+    private static func asciiString(from bytes: [UInt8]) -> String {
+        return String(decoding: bytes, as: Unicode.ASCII.self)
+    }
+    
+    private static func bytesFromData(_ data: Data) -> [UInt8] {
+        return data.withUnsafeBytes({
+            [UInt8](UnsafeBufferPointer(start: $0, count: data.count))
+        })
     }
 }
