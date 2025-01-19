@@ -33,9 +33,8 @@ final class Q3InfoServer {
         guard let serverInfo = Q3Parser.parseServer(response.data) else {
             return server
         }
-        var updatedServer = server
-        updatedServer.update(with: serverInfo)
-        return updatedServer
+        server.update(with: serverInfo)
+        return server
     }
 }
 
@@ -59,10 +58,9 @@ final class Q3StatusServer {
         guard let serverStatus = Q3Parser.parseServerStatus(response.data) else {
             return server
         }
-        var updatedServer = server
-        updatedServer.rules = serverStatus.rules
-        updatedServer.players = serverStatus.players
-        updatedServer.update(currentPlayers: String(serverStatus.players.count), map: serverStatus.rules.first(where: { $0.key == "mapname" })?.value, ping: "\(response.runningTime)")
-        return updatedServer
+        server.rules = serverStatus.rules
+        server.players = serverStatus.players
+        server.update(currentPlayers: String(serverStatus.players.count), map: serverStatus.rules.first(where: { $0.key == "mapname" })?.value, ping: "\(response.runningTime)")
+        return server
     }
 }

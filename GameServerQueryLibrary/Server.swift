@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct Server: Identifiable, Sendable {
+public class Server: Identifiable, @unchecked Sendable {
     public var id: String { hostname }
     public private(set) var ping: String = ""
     public private(set) var pingInt: Int = 0
@@ -32,7 +32,7 @@ public struct Server: Identifiable, Sendable {
         self.hostname = "\(ip):\(port)"
     }
     
-    mutating func update(with serverInfo: [String: String]?) {
+    func update(with serverInfo: [String: String]?) {
         guard let serverInfo = serverInfo, !serverInfo.isEmpty else {
             return
         }
@@ -74,7 +74,7 @@ public struct Server: Identifiable, Sendable {
         self.name = originalName.q3ColorDecoded
     }
     
-    mutating func update(currentPlayers: String, map: String?, ping: String) {
+    func update(currentPlayers: String, map: String?, ping: String) {
         guard ping.count > 0 else {
             return
         }

@@ -185,16 +185,16 @@ class Q3Parser: Parsable {
     }
     
     private static func asciiString(from data: Data) -> String {
-        return String(decoding: bytesFromData(data), as: Unicode.ASCII.self)
+        String(decoding: bytesFromData(data), as: Unicode.ASCII.self)
     }
     
     private static func asciiString(from bytes: [UInt8]) -> String {
-        return String(decoding: bytes, as: Unicode.ASCII.self)
+        String(decoding: bytes, as: Unicode.ASCII.self)
     }
     
     private static func bytesFromData(_ data: Data) -> [UInt8] {
-        return data.withUnsafeBytes({
-            [UInt8](UnsafeBufferPointer(start: $0, count: data.count))
-        })
+        data.withUnsafeBytes { pointer in
+            [UInt8](UnsafeBufferPointer(start: pointer, count: data.count))
+        }
     }
 }
