@@ -12,7 +12,7 @@ public enum SupportedGames: CaseIterable {
     case quake3
     case urbanTerror
     
-    var name: String {
+    public var name: String {
         switch self {
         case .quake3:
             return "Quake 3 Arena"

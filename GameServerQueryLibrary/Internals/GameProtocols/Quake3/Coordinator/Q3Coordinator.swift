@@ -31,26 +31,39 @@ public final actor Q3Coordinator: Coordinator, Sendable {
     
     public func fetchServersInfo(for servers: [Server]) -> AsyncThrowingStream<Server, Error> {
         return AsyncThrowingStream { continuation in
-            Task {
-                try await withThrowingTaskGroup(of: Server.self) { taskGroup in
-                    for server in servers {
-                        if !taskGroup.isCancelled {
-                            taskGroup.addTask {
-                                return try await self.updateServerInfo(server)
-                            }
-                        }
-                    }
-                    
-                    for try await item in taskGroup {
-                        continuation.yield(item)
-                    }
-                    
-                    continuation.finish()
-                }
-            }
-            
+            // Set onTermination before starting the Task so it is always in
+            // place before the stream could possibly be finished or cancelled.
             continuation.onTermination = { @Sendable status in
                 NLog.log("Stream terminated with status \(status)")
+            }
+            // [weak self] prevents a retain cycle: if the coordinator is
+            // released before all server queries complete, the Task finishes
+            // the stream cleanly rather than keeping the coordinator alive.
+            Task { [weak self] in
+                guard let self else {
+                    continuation.finish()
+                    return
+                }
+                // Previously errors thrown inside a bare Task {} were silently
+                // swallowed, leaving the stream open forever. The do-catch
+                // ensures the stream is always terminated, success or failure.
+                do {
+                    try await withThrowingTaskGroup(of: Server.self) { taskGroup in
+                        for server in servers {
+                            if !taskGroup.isCancelled {
+                                taskGroup.addTask {
+                                    return try await self.updateServerInfo(server)
+                                }
+                            }
+                        }
+                        for try await item in taskGroup {
+                            continuation.yield(item)
+                        }
+                        continuation.finish()
+                    }
+                } catch {
+                    continuation.finish(throwing: error)
+                }
             }
         }
     }

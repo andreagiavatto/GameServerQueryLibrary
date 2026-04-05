@@ -28,24 +28,26 @@ class Q3Parser: Parsable {
             actualData = actualData.subdata(in: actualData.startIndex..<actualDataEnd)
         }
         
-        if actualData.count > 0 {
-            
-            let len: Int = actualData.count
-            var servers = [String]()
-            for i in 0..<len {
-                if i > 0 && i % 7 == 0 {
-                    // -- 4 bytes for ip, 2 for port, 1 separator
-                    let s = actualData.index(actualData.startIndex, offsetBy: i-7)
-                    let e = actualData.index(s, offsetBy: 7)
-                    let server = parseServerData(actualData.subdata(in: s..<e))
-                    servers.append(server)
-                }
-            }
-            
-            return servers
+        guard actualData.count > 0 else { return [] }
+
+        // Each server entry is 4 bytes (IP) + 2 bytes (port) = 6 bytes of data.
+        // All entries except the last are followed by a 1-byte '\' separator,
+        // making them 7 bytes wide. The final entry has no trailing separator
+        // (it was consumed by the EOT sequence), so it is exactly 6 bytes.
+        // The old loop fired only at i % 7 == 0 (i > 0), which required i to
+        // reach len — but len = 7*(N-1)+6 = 7N-1, so i=7*(N-1) was the last
+        // trigger and the Nth server was always silently dropped.
+        let len = actualData.count
+        var servers = [String]()
+        var offset = 0
+        while offset + 6 <= len {
+            let chunkSize = min(7, len - offset)
+            let s = actualData.index(actualData.startIndex, offsetBy: offset)
+            let e = actualData.index(s, offsetBy: chunkSize)
+            servers.append(parseServerData(actualData.subdata(in: s..<e)))
+            offset += 7
         }
-        
-        return []
+        return servers
     }
     
     static func parseServer(_ data: Data) -> [String: String]? {
@@ -64,7 +66,7 @@ class Q3Parser: Parsable {
         }
         
         var info = infoResponse.components(separatedBy: "\\")
-        info = info.filter { NSPredicate(format: "SELF != ''").evaluate(with: $0) }
+        info = info.filter { !$0.isEmpty }
         var keys = [String]()
         var values = [String]()
         
@@ -116,7 +118,7 @@ class Q3Parser: Parsable {
             players = parsePlayersStatus(playersStatus)
         }
         var status = serverStatus.components(separatedBy: "\\")
-        status = status.filter { NSPredicate(format: "SELF != ''").evaluate(with: $0) }
+        status = status.filter { !$0.isEmpty }
         var keys = [String]()
         var values = [String]()
         
@@ -140,31 +142,14 @@ class Q3Parser: Parsable {
     // MARK: - Private methods
     
     private static func parseServerData(_ data: Data) -> String {
-        
-        let len: Int = data.count
+        // Layout: byte[0..3] = IP octets, byte[4..5] = port (big-endian),
+        // byte[6] = '\' separator (present in 7-byte chunks, absent in the
+        // final 6-byte chunk — both are handled safely by the guard below).
         let bytes = [UInt8](data)
-        var port: UInt32 = 0
-        var server = String()
-        for i in 0..<len - 1 {
-            
-            if i < 4 {
-                if i < 3 {
-                    server = server.appendingFormat("%d.", bytes[i])
-                }
-                else {
-                    server = server.appendingFormat("%d", bytes[i])
-                }
-            }
-            else {
-                if i == 4 {
-                    port += UInt32(bytes[i]) << 8
-                }
-                else {
-                    port += UInt32(bytes[i])
-                }
-            }
-        }
-        return "\(server):\(port)"
+        guard bytes.count >= 6 else { return "" }
+        let ip = "\(bytes[0]).\(bytes[1]).\(bytes[2]).\(bytes[3])"
+        let port = UInt32(bytes[4]) << 8 | UInt32(bytes[5])
+        return "\(ip):\(port)"
     }
     
     private static func parsePlayersStatus(_ players: [String]) -> [Player] {

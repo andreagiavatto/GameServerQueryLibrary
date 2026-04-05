@@ -9,24 +9,38 @@
 import Foundation
 
 public extension String {
-    
+
+    // Compiled once at class-load time and reused for every call.
+    // NSRegularExpression is thread-safe for concurrent matching once compiled,
+    // so a shared static is correct here.
+    private static let q3SimpleColorRegex = try! NSRegularExpression(
+        pattern: "\\^+[0-9]", options: .caseInsensitive)
+    private static let q3BgColorRegex = try! NSRegularExpression(
+        pattern: "\\^+[0-9A-Z]{6}", options: .caseInsensitive)
+    private static let q3BlinkRegex = try! NSRegularExpression(
+        pattern: "\\^+[a-z]", options: .caseInsensitive)
+
     var q3ColorDecoded: String {
-        guard self.count > 0 else {
-            return self
-        }
-        
-        var decodedString = ""
-        
-        do {
-            let regex = try NSRegularExpression(pattern: "\\^+[0-9]", options: .caseInsensitive)
-            decodedString = regex.stringByReplacingMatches(in: self, options: [], range: NSMakeRange(0, self.count), withTemplate: "") // removes simple colors
-            let regex2 = try NSRegularExpression(pattern: "\\^+[0-9A-Z]{6}", options: .caseInsensitive)
-            decodedString = regex2.stringByReplacingMatches(in: decodedString, options: [], range: NSMakeRange(0, decodedString.count), withTemplate: "") // removes background colors
-            let regex3 = try NSRegularExpression(pattern: "\\^+[a-z]", options: .caseInsensitive)
-            decodedString = regex3.stringByReplacingMatches(in: decodedString, options: [], range: NSMakeRange(0, decodedString.count), withTemplate: "") // removes blinks and such
-        } catch (let error) {
-            NLog.error(error)
-        }
-        return decodedString
+        guard !self.isEmpty else { return self }
+
+        // NSRegularExpression requires the UTF-16 length (NSString.length),
+        // not the Swift Character count, for its NSRange parameter.
+        var result = self
+        var nsResult = result as NSString
+        result = String.q3SimpleColorRegex.stringByReplacingMatches(
+            in: result, options: [], range: NSRange(location: 0, length: nsResult.length),
+            withTemplate: "")  // strips ^0 … ^9 colour codes
+
+        nsResult = result as NSString
+        result = String.q3BgColorRegex.stringByReplacingMatches(
+            in: result, options: [], range: NSRange(location: 0, length: nsResult.length),
+            withTemplate: "")  // strips ^RRGGBB background colour codes
+
+        nsResult = result as NSString
+        result = String.q3BlinkRegex.stringByReplacingMatches(
+            in: result, options: [], range: NSRange(location: 0, length: nsResult.length),
+            withTemplate: "")  // strips ^a … ^z style codes (blink, bold, etc.)
+
+        return result
     }
 }

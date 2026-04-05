@@ -9,7 +9,10 @@
 import Foundation
 
 public struct Player: Identifiable, Sendable {
-    public var id: String { name }
+    /// A stable, per-instance unique identifier.  Using `name` caused SwiftUI
+    /// identity collisions when two players shared the same name, leading to
+    /// incorrect row rendering and missed updates.
+    public let id: UUID
     public let name: String
     public let ping: String
     public let score: String
@@ -18,12 +21,13 @@ public struct Player: Identifiable, Sendable {
         guard !line.isEmpty else {
             return nil
         }
-        
+
         let playerComponents = line.components(separatedBy: CharacterSet.whitespaces)
         guard playerComponents.count >= 3 else {
             return nil
         }
-        
+
+        self.id = UUID()
         self.score = playerComponents[0]
         self.ping = playerComponents[1]
         let restOfName = Array(playerComponents[2...])

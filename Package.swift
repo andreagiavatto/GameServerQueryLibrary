@@ -26,6 +26,11 @@ let package = Package(
             name: "GameServerQueryLibrary",
             dependencies: [.product(name: "AsyncAlgorithms", package: "swift-async-algorithms")],
             path: "GameServerQueryLibrary"
+        ),
+        .testTarget(
+            name: "GameServerQueryLibraryTests",
+            dependencies: ["GameServerQueryLibrary"],
+            path: "Tests/GameServerQueryLibraryTests"
         )
     ]
 )

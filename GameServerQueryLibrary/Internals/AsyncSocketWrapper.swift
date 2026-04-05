@@ -19,26 +19,32 @@ public final actor AsyncSocketWrapper: Sendable {
     private let queue = DispatchQueue(label: "com.gameServerQueryLibrary.socketQueue")
     private var timeoutTask: DispatchWorkItem?
     private var continuation: CheckedContinuation<SocketResponse, Error>?
-    
+    /// How long to wait for a UDP response before giving up.  500 ms was too
+    /// aggressive for servers with geographic distance or transient congestion.
+    /// Callers can pass a custom value; 2 s is a sensible real-world default.
+    private let requestTimeout: TimeInterval
+
     private var requestInProgress = false
-    
-    public init(requestMarker: [UInt8], host: NWEndpoint.Host, port: NWEndpoint.Port) {
+
+    public init(
+        requestMarker: [UInt8],
+        host: NWEndpoint.Host,
+        port: NWEndpoint.Port,
+        timeout: TimeInterval = 2.0
+    ) {
         self.requestMarker = requestMarker
         self.host = host
         self.port = port
+        self.requestTimeout = timeout
         connection = NWConnection(host: host, port: port, using: .udp)
-        connection.start(queue: queue)
-        Task {
-            await observeConnectionStateUpdates()
-        }
-    }
-    
-    public func observeConnectionStateUpdates() async {
+        // Install the state handler before starting the connection so we cannot
+        // miss an early .ready transition that arrives before a Task could run.
         connection.stateUpdateHandler = { [weak self] newState in
             Task {
                 await self?.handleNewState(newState)
             }
         }
+        connection.start(queue: queue)
     }
     
     public func sendRequest() async throws -> SocketResponse {
@@ -46,6 +52,7 @@ public final actor AsyncSocketWrapper: Sendable {
             throw SocketError.requestAlreadyInProgress
         }
         requestInProgress = true
+        data = Data()  // clear any stale bytes from a previous request
         return try await withCheckedThrowingContinuation { continuation in
             self.continuation = continuation
             Task {
@@ -56,17 +63,28 @@ public final actor AsyncSocketWrapper: Sendable {
             }
         }
     }
-    
+
+    // Both finish methods nil out `continuation` immediately after resuming so
+    // a second call from a racing path (e.g. timeout + connection failure) is a
+    // safe no-op rather than a "tried to resume continuation more than once" crash.
+    // They also reset `requestInProgress` so the socket can be reused.
     private func finish(with response: SocketResponse) async {
-        continuation?.resume(returning: response)
+        guard let continuation else { return }
+        self.continuation = nil
+        requestInProgress = false
+        continuation.resume(returning: response)
     }
-    
+
     private func finish(with error: Error) async {
-        continuation?.resume(throwing: error)
+        guard let continuation else { return }
+        self.continuation = nil
+        requestInProgress = false
+        continuation.resume(throwing: error)
     }
-    
+
     private func cleanup() async {
         continuation = nil
+        requestInProgress = false
         invalidateTimer()
         connection.cancel()
     }
@@ -136,7 +154,7 @@ public final actor AsyncSocketWrapper: Sendable {
             }
         })
         self.timeoutTask = timeoutTask
-        queue.asyncAfter(deadline: .now() + 0.5, execute: timeoutTask)
+        queue.asyncAfter(deadline: .now() + requestTimeout, execute: timeoutTask)
     }
     
     private func invalidateTimer() {

@@ -33,8 +33,10 @@ final class Q3InfoServer {
         guard let serverInfo = Q3Parser.parseServer(response.data) else {
             return server
         }
-        server.update(with: serverInfo)
-        return server
+        // Server is now a struct; mutating methods require a local var copy.
+        var updated = server
+        updated.update(with: serverInfo)
+        return updated
     }
 }
 
@@ -58,9 +60,15 @@ final class Q3StatusServer {
         guard let serverStatus = Q3Parser.parseServerStatus(response.data) else {
             return server
         }
-        server.rules = serverStatus.rules
-        server.players = serverStatus.players
-        server.update(currentPlayers: String(serverStatus.players.count), map: serverStatus.rules.first(where: { $0.key == "mapname" })?.value, ping: "\(response.runningTime)")
-        return server
+        // Server is now a struct; mutating methods require a local var copy.
+        var updated = server
+        updated.rules = serverStatus.rules
+        updated.players = serverStatus.players
+        updated.update(
+            currentPlayers: String(serverStatus.players.count),
+            map: serverStatus.rules.first(where: { $0.key == "mapname" })?.value,
+            ping: "\(response.runningTime)"
+        )
+        return updated
     }
 }
